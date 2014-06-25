@@ -28,6 +28,10 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+LOCAL_APPS = (
+	'blog',
+)
+
 THIRD_PARTY_APPS = (
 	'south',
 )
@@ -41,7 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 )
 
-INSTALLED_APPS += THIRD_PARTY_APPS
+INSTALLED_APPS += LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

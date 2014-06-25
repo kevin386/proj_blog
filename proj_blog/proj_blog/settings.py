@@ -28,6 +28,9 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
+THIRD_PARTY_APPS = (
+	'south',
+)
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -37,6 +40,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 )
+
+INSTALLED_APPS += THIRD_PARTY_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

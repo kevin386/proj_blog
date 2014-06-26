@@ -1,0 +1,58 @@
+
+{% extends "layout.html" %}
+
+{% block content %}
+      <div class="article_main">
+        <div class="article_title">
+          <div class="zan_article">
+            <p class="zan_p1">赞</p>
+            <p class="zan_p2">{{ article.voteCount }}</p>
+          </div>
+          <p class="tp1"> {% if article.yuan %} <span class="yuan">原</span> {% else %}{% if article.zhuan %} <span class="zhuan">转</span> {% endif %}{% endif %}{{ article.title }} </p>
+          <p class="tp2">发表于{{ article.pulishTimeStamp }}前({{ article.pulishDatetime }})&nbsp;阅读（<span>{{ article.viewCount }}</span>）&nbsp;评论（<span>{{ article.commentCount }}</span>）</p>
+        </div>
+        <div class="article_t_sep"></div>
+        <div class="article_content"> {{ article.content }} </div>
+        <div class="article_nav">
+          <p id="pre_article"><a href="{{ preArticle.href }}">上一篇&gt;&gt; {{ preArticle.name }}</a></p>
+          <p id="next_article"><a href="{{ nextArticle.href }}">下一篇&gt;&gt; {{ nextArticle.name }}</a></p>
+        </div>
+        <div class="article_comment">
+          <p id="comment_p1">评论({{ article.commentCount }})</p>
+          <div id="comment_sep"></div>
+          {% ifequal article.commentCount 0 %}
+          <p id="comment_p2">尚无网友评论</p>
+          {% else %}
+          <div class="comment_item"> <img src="static/images/220193_50.jpg" height="50" width="50"/>
+            <div class="comment_item_con">
+              <p class="comment_title">61楼：<span>芳仔小脚印</span> 发表于 2014-04-15 16:13 <a href="#">回复此评论</a></p>
+              <!-- 如何在这里使用递归输出呢？ -->
+              <div class="comment_reference">
+              
+              <div class="comment_reference">
+              
+              <div class="comment_reference">
+              
+              <span class="reference_sp1">引用来自"蔡开源中"的评论</span><span class="reference_sp2">可以免证书，不过手机得越狱。我得就是这样</span>
+              </div>
+              
+              <span class="reference_sp1">引用来自"蔡开源中"的评论</span><span class="reference_sp2">可以免证书，不过手机得越狱。我得就是这样</span>
+              </div>
+              
+              <span class="reference_sp1">引用来自"蔡开源中"的评论</span><span class="reference_sp2">可以免证书，不过手机得越狱。我得就是这样</span>
+              </div>
+              
+              <p class="comment_real">嗯，是的，不过我折腾半天搞不起来，求分享免证书的步骤</p>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+        <div class="article_comment_form">
+        	<!--<img src="images/portrait.gif" /> -->
+	        <div class="input_omment">
+          <textarea></textarea>
+          <p> <a href="{{ article.submitComment.href }}">发表评论</a> </p>
+          </div>
+        </div>
+      </div>
+{% endblock %}

@@ -14,7 +14,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 BLOG_DIR = os.path.join(BASE_DIR,'../blog/')
 
 TEMPLATE_DIRS = (
-	os.path.join(BLOG_DIR,'templates'),
+    os.path.join(BLOG_DIR,'templates'),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -33,8 +33,8 @@ ALLOWED_HOSTS = []
 
 # Application definition
 INSTALLED_APPS = (
-	'blog',
-	'south',
+    'blog',
+    'south',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

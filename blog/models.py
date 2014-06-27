@@ -2,11 +2,11 @@
 from django.db import models
 
 class PageView(models.Model):
-    today = models.IntegerField("今日访问量")
-    yesterday = models.IntegerField("昨天访问量")
-    week = models.IntegerField("本周访问量")
-    month = models.IntegerField("本月访问量")
-    total = models.IntegerField("总访问量")
+    today = models.IntegerField("今日访问量",default=0)
+    yesterday = models.IntegerField("昨天访问量",default=0)
+    week = models.IntegerField("本周访问量",default=0)
+    month = models.IntegerField("本月访问量",default=0)
+    total = models.IntegerField("总访问量",default=0)
     def __unicode__(self):
         return u"访问量统计"
 
@@ -35,9 +35,9 @@ class Article(models.Model):
     content = models.TextField("内容")
     create_date = models.DateField("创建日期",auto_now_add=True)
     pub_date = models.DateField("发布日期",auto_now=True)
-    is_from = models.CharField("来自", max_length=1, default='Y')
-    view_count = models.IntegerField("访问量统计", blank=True)
-    vote_count = models.IntegerField("支持量统计", blank=True)
+    is_from = models.CharField("来自", max_length=1, default='Y', choices=(('Y','yuanchuang'),('Z','zhuanzai')))
+    view_count = models.IntegerField("访问量统计", default=0)
+    vote_count = models.IntegerField("支持量统计", default=0)
     def __unicode__(self):
         return self.title
 

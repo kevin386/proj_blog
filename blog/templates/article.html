@@ -14,8 +14,12 @@
         <div class="article_t_sep"></div>
         <div class="article_content"> {{ article.content }} </div>
         <div class="article_nav">
+           {% if preArticle %}
           <p id="pre_article"><a href="{{ preArticle.href }}">上一篇&gt;&gt; {{ preArticle.name }}</a></p>
+          {% endif %}
+           {% if nextArticle %}
           <p id="next_article"><a href="{{ nextArticle.href }}">下一篇&gt;&gt; {{ nextArticle.name }}</a></p>
+          {% endif %}
         </div>
         <div class="article_comment">
           <p id="comment_p1">评论({{ article.commentCount }})</p>
@@ -45,7 +49,7 @@
               <p class="comment_real">嗯，是的，不过我折腾半天搞不起来，求分享免证书的步骤</p>
             </div>
           </div>
-          {% endif %}
+          {% endifequal %}
         </div>
         <div class="article_comment_form">
         	<!--<img src="images/portrait.gif" /> -->

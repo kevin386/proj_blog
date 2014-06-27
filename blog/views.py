@@ -27,6 +27,8 @@ Namespaces are one honking great idea -- let's do more of those!
 
 zen_author = '''The Zen of Python, by Tim Peters'''
 
+HTTPURL = lambda h,url: "http://" + h + url
+
 class Zen(object):
     def __init__(self,content=None,author=None):
         self.content = content
@@ -35,6 +37,11 @@ class Zen(object):
 class Image(object):
     def __init__(self,src="",href="#"):
         self.src = src
+        self.href = href
+
+class Url(object):
+    def __init__(self,name="",href="#"):
+        self.name = name
         self.href = href
 
 class Blog(object):
@@ -49,21 +56,12 @@ class Blog(object):
 
         self.zen.content = zen_content
         self.zen.author = zen_author
-        self.avatar.src = "static/images/IMG_Ali_01447.jpg"
-        self.categories = [Url(host=host, name=cat.name, href="cat/"+str(cat.id)) for cat in models.Category.objects.all()]
+        self.avatar.src = "images/IMG_Ali_01447.jpg"
+        self.categories = [Url(name=cat.name, href=HTTPURL(host,"/blog/cat/"+str(cat.id))) for cat in models.Category.objects.all()]
         self.ranks = None
         self.lastestComments = None
         self.pageView = models.PageView.objects.all()
-        self.catNav = self.categories
-
-class Url(object):
-    def __init__(self,host="", name="",href="#"):
-        self.name = name
-        if host:
-            if not href.startswith('/'):
-                host += '/'
-            href = "http://" + host + href
-        self.href = href
+        self.catNav = []
 
 class Article(object):
     def __init__(self, art=None, caption=True, host=""):
@@ -76,9 +74,9 @@ class Article(object):
             self.date = '-'.join([str(art.pub_date.year),str(art.pub_date.month)])
             self.pulishTimeStamp = 2
             self.pulishDatetime = "2012-05-28 16:01"
-            self.href = "art/" + str(art.id)
+            self.href = HTTPURL(host,"blog/art/" + str(art.id))
             self.title = art.title
-            self.cat = Url(host=host, name=art.category.name, href="cat/" + str(art.category.id))
+            self.cat = Url(name=art.category.name, href=HTTPURL(host,"/blog/cat/" + str(art.category.id)))
             self.commentCount = 0
             self.viewCount = art.view_count
             self.voteCount = art.vote_count
@@ -93,15 +91,17 @@ def article(request,id=0):
     try:
         art = models.Article.objects.get(id=id)
         article = Article(art, False, host)
-        if int(id) - 1 >= 0:
-            art = models.Article.objects.get(id=str((int(id))-1));
-            preArticle = Url(host=host, name=art.title, href="art/" + str(art.id))
-        if int(id) + 1 >= 0:
-            art = models.Article.objects.get(id=str((int(id))+1))
-            nextArticle = Url(host=host, name=art.title, href="art/" + str(art.id))
+        blog.catNav.append(Url(name=art.category.name, href=HTTPURL(host,"/blog/cat/"+str(art.category.id))))
     except models.Article.DoesNotExist, e:
         raise Http404
-    finally:
+    try:
+        if int(id) - 1 >= 0:
+            art = models.Article.objects.get(id=str((int(id))-1));
+            preArticle = Url(name=art.title, href=HTTPURL(host,"/blog/art/" + str(art.id)))
+        if int(id) + 1 >= 0:
+            art = models.Article.objects.get(id=str((int(id))+1))
+            nextArticle = Url(name=art.title, href=HTTPURL(host,"/blog/art/" + str(art.id)))
+    except models.Article.DoesNotExist, e:
         pass
     return render_to_response('article.html', locals())
 
@@ -112,8 +112,6 @@ def category(request,id=0):
         articles = [Article(art, host) for art in models.Article.objects.get(category=id)]
     except models.Article.DoesNotExist, e:
         raise Http404
-    finally:
-        pass
     return render_to_response('article.html', locals())
 
 def home(request):
@@ -123,6 +121,4 @@ def home(request):
         articles = [Article(art, host) for art in models.Article.objects.all()]
     except models.Article.DoesNotExist, e:
         raise Http404
-    finally:
-        pass
     return render_to_response('index.html', locals())

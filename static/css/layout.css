@@ -1,8 +1,3 @@
-/*本模板是由标准之路(www.aa25.cn)的×××制作完成*/
-/*本人水平有限，使用自愿，不对因使用此模板造成的任何后果负任何责任*/
-/*如果您想转载此资源，请保留“<a href="http://www.aa25.cn">标准之路www.aa25.cn</a>”的链接及版权标识*/
-/*如有更好的建议或意见，请到www.aa25.cn留言，本人尽力解决*/
-/*2008-8-28*/
 body {
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:14px;
@@ -57,7 +52,7 @@ table {
 }
 #container {
 	margin:0 auto;
-	width:98%;
+	width:80%;
 }
 #header {
 	background-color: #5EC16E;
@@ -165,6 +160,10 @@ table {
 	background-color: #5CC26F;
 	margin-bottom: 5px;
 }
+
+#icon a{
+	display: block;
+}
 #sidebar .sep {
 	background-image: url(../images/00000001_r2_c2.jpg);
 	background-repeat: repeat-x;
@@ -229,7 +228,7 @@ table {
 .article_date {
 	background-color: #555FAA;
 	height: 46px;
-	width: 48px;
+	width: 50px;
 	float: right;
 	margin-top: 5px;
 	margin-right: 10px;
@@ -252,12 +251,12 @@ table {
 }
 .article_date .day {
 	font-size: 19px;
-	margin-left: 12px;
+	margin-left: 13px;
 	font-weight: bold;
 }
 .article_date .date {
 	font-size: 12px;
-	margin-left: 3px;
+	margin-left: 2px;
 }
 #container #header .one {
 	font-size: 36px;
@@ -273,7 +272,7 @@ table {
 	float: right;
 }
 .search a {
-	font-family: Arial, Helvetica, sans-serif;
+	/*font-family: Arial, Helvetica, sans-serif;*/
 	font-size: 16px;
 	background-color: #5CC26F;
 	vertical-align:middle;
@@ -415,6 +414,11 @@ table {
 	background-color: #555FAA;
 	padding: 4px;
 }
+
+.tp1 .atitle{
+	padding-top: 3px;
+}
+
 .article_title .tp2 span {
 	color: #5EC16E;
 }

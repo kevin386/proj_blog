@@ -38,6 +38,9 @@ class Article(models.Model):
     is_from = models.CharField("来自", max_length=1, default='Y', choices=(('Y','yuanchuang'),('Z','zhuanzai')))
     view_count = models.IntegerField("访问量统计", default=0)
     vote_count = models.IntegerField("支持量统计", default=0)
+    comment_count = property(lambda self: self.comment_set.count())
+    is_yuan = property(lambda self: self.is_from == u'Y')
+    is_zhuan = property(lambda self: self.is_from == u'Z')
     def __unicode__(self):
         return self.title
 

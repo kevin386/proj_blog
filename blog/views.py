@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
 from django.shortcuts import get_object_or_404,render_to_response 
 from django.http import Http404
-from blog import models
+from blog.models import *
 
 zen_content = '''
 Beautiful is better than ugly.
@@ -27,98 +27,61 @@ Namespaces are one honking great idea -- let's do more of those!
 
 zen_author = '''The Zen of Python, by Tim Peters'''
 
-HTTPURL = lambda h,url: "http://" + h + url
-
 class Zen(object):
     def __init__(self,content=None,author=None):
         self.content = content
         self.author = author
 
-class Image(object):
-    def __init__(self,src="",href="#"):
-        self.src = src
-        self.href = href
-
-class Url(object):
-    def __init__(self,name="",href="#"):
-        self.name = name
-        self.href = href
-
 class Blog(object):
-    def __init__(self,host):
+    def __init__(self):
         self.name = "kevin' blog"
         self.keywards = u"小虫子,django,python"
         self.author = "kevin"
         self.description = u"这是一个python程序员的博客"
         self.zen = Zen()
-        self.avatar = Image()
         self.showRequest = False
-
         self.zen.content = zen_content
         self.zen.author = zen_author
-        self.avatar.src = "images/IMG_Ali_01447.jpg"
-        self.categories = [Url(name=cat.name, href=HTTPURL(host,"/blog/cat/"+str(cat.id))) for cat in models.Category.objects.all()]
         self.ranks = None
         self.lastestComments = None
-        self.pageView = models.PageView.objects.all()
-        self.catNav = []
+        #self.pageView = PageView.objects.get(id=1)
+        try:
+            self.categories = [cat for cat in Category.objects.all()]
+        except Category.DoesNotExist, e:
+            raise Http404
 
-class Article(object):
-    def __init__(self, art=None, caption=True, host=""):
-        if art:
-            if art.is_from is 'Y' : 
-                self.yuan = True 
-            elif art.is_from is 'Z':
-                self.zhuan = True
-            self.day = art.pub_date.day
-            self.date = '-'.join([str(art.pub_date.year),str(art.pub_date.month)])
-            self.pulishTimeStamp = 2
-            self.pulishDatetime = "2012-05-28 16:01"
-            self.href = HTTPURL(host,"blog/art/" + str(art.id))
-            self.title = art.title
-            self.cat = Url(name=art.category.name, href=HTTPURL(host,"/blog/cat/" + str(art.category.id)))
-            self.commentCount = 0
-            self.viewCount = art.view_count
-            self.voteCount = art.vote_count
-            if caption:
-                self.caption = art.content[0:50] + "..."
-            else:
-                self.content = art.content
+def aboutme(request):
+    pass
 
-def article(request,id=0):
-    host = request.META['HTTP_HOST']
-    blog = Blog(host)
+def article(request,id='0'):
+    blog = Blog()
     try:
-        art = models.Article.objects.get(id=id)
-        article = Article(art, False, host)
-        blog.catNav.append(Url(name=art.category.name, href=HTTPURL(host,"/blog/cat/"+str(art.category.id))))
-    except models.Article.DoesNotExist, e:
+        article = Article.objects.get(id=id)
+    except Article.DoesNotExist, e:
         raise Http404
     try:
-        if int(id) - 1 >= 0:
-            art = models.Article.objects.get(id=str((int(id))-1));
-            preArticle = Url(name=art.title, href=HTTPURL(host,"/blog/art/" + str(art.id)))
-        if int(id) + 1 >= 0:
-            art = models.Article.objects.get(id=str((int(id))+1))
-            nextArticle = Url(name=art.title, href=HTTPURL(host,"/blog/art/" + str(art.id)))
-    except models.Article.DoesNotExist, e:
+        preArticle = Article.objects.get(id=str((int(id))-1));
+    except Article.DoesNotExist, e:
+        pass
+    try:
+        nextArticle = Article.objects.get(id=str((int(id))+1))
+    except Article.DoesNotExist, e:
         pass
     return render_to_response('article.html', locals())
 
-def category(request,id=0):
-    host = request.META['HTTP_HOST']
-    blog = Blog(host)
+def category(request,id='0'):
+    blog = Blog()
     try:
-        articles = [Article(art, host) for art in models.Article.objects.get(category=id)]
-    except models.Article.DoesNotExist, e:
+        cat = Category.objects.get(id=id)
+        articles = cat.article_set.all()
+    except Article.DoesNotExist, e:
         raise Http404
-    return render_to_response('article.html', locals())
+    return render_to_response('index.html', locals())
 
 def home(request):
-    host = request.META['HTTP_HOST'];
-    blog = Blog(host)
+    blog = Blog()
     try:
-        articles = [Article(art, host) for art in models.Article.objects.all()]
-    except models.Article.DoesNotExist, e:
+        articles = Article.objects.all()
+    except Article.DoesNotExist, e:
         raise Http404
     return render_to_response('index.html', locals())

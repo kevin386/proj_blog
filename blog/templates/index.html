@@ -5,14 +5,20 @@
       	{% for article in articles %}
            <div class="article_item">
               <div class="article_date">
-                <p class="day">{{ article.day }}</p>
-                <p class="date">{{ article.date }}</p>
+                <p class="day">{{ article.pub_date|date:"d" }}</p>
+                <p class="date">{{ article.pub_date|date:"Y-m" }}</p>
               </div>
-              <p class="title_p1"><a href="{{ article.href }}">{{ article.title }}</a></p>
-              <p class="title_p2">分类: <a href="{{ article.cat.href }}">{{ article.cat.name }}</a>&nbsp;统计: {{ article.commentCount }}评/{{ article.viewCount }}阅/{{ article.voteCount }}赞</p>
+              <p class="title_p1"><a href="{% url 'article_by_id' article.id %}">{{ article.title }}</a></p>
+              <p class="title_p2">分类: <a href="{% url 'articles_by_cat' article.category.id %}">{{ article.category.name }}</a>&nbsp;统计: {{ article.comment_count }}评/{{ article.view_count }}阅/{{ article.vote_count }}赞</p>
             </div>
-            
             <div class="article_sep"></div>
+           
   		  {% endfor %}
+        
+          {% if not articles %}
+          没有文章!
+          {% endif %}
+
+           
         </div>
 {% endblock %}

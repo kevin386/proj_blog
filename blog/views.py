@@ -34,7 +34,7 @@ class Zen(object):
 
 class Blog(object):
     def __init__(self):
-        self.name = "kevin' blog"
+        self.name = "kevin's blog"
         self.keywards = u"小虫子,django,python"
         self.author = "kevin"
         self.description = u"这是一个python程序员的博客"
@@ -57,6 +57,7 @@ def article(request,id='0'):
     blog = Blog()
     try:
         article = Article.objects.get(id=id)
+        blog.catNav = article.category
     except Article.DoesNotExist, e:
         raise Http404
     try:

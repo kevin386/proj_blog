@@ -8,8 +8,25 @@
 <meta name="Keywords" content="{{ blog.keywards }}" />
 <meta name="author" content"{{ blog.author }}" />
 <meta name="Description" content="{{ blog.description }}" />
+<!-- syntaxhighlighter begin -->
+<link type="text/css" rel="stylesheet" href="{% get_static_prefix %}syntaxhighlighter/styles/shCore.css"></link>
+<link type="text/css" rel="stylesheet" href="{% get_static_prefix %}syntaxhighlighter/styles/shCoreDefault.css"></link>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shCore.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushCSharp.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushPhp.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushJScript.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushJava.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushVb.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushSql.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushXml.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushDelphi.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushPython.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushRuby.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushCss.js"></script>
+<script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushCpp.js"></script>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+<!-- syntaxhighlighter end -->
 </head>
-
 <body>
 <div id="container">
   <div id="header">
@@ -49,7 +66,9 @@
         <div class="sep"></div>
 		    <ul id="ulpic">
         {% for cat in blog.categories %}
-          <li><a href="{% url 'articles_by_cat' cat.id %}">{{ cat.name }}</a></li>
+          {% if cat.article_set.count > 0 %}
+          <li><a href="{% url 'articles_by_cat' cat.id %}">{{ cat.name }}({{cat.article_set.count}})</a></li>
+          {% endif %}
 		    {% endfor %}
         </ul>
       </div>
@@ -97,12 +116,10 @@
         
         <ul>
           <li><a href="{% url 'home' %}">首页</a></li>
-        {% for nav in blog.catNav %}
-          <li><a href="{{ nav.href }}">{{ nav.name }}</a></li>
-          {% if not forloop.last %}
+        {% if blog.catNav %}
           <li>=></li>
-          {% endif %}
-		    {% endfor %}
+          <li><a href="{% url 'articles_by_cat' blog.catNav.id %}">{{ blog.catNav.name }}</a></li>
+		    {% endif %}
         </ul>
         
         <form class="search">

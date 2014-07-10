@@ -11,13 +11,15 @@ function getByClass(clsName,parent){
     return eles;
 }
 
-function submitVote (aid) {
-    //use cookie to mutex more than once click
-    //submit a vote
-    alert('vote OK')
-}
-
-window.onload=function () {
-    var vote = getByClass('zan_article')[0]
-    eventUtil.addHandler(vote, 'click', submitVote)
-}
+$(document).ready(function () {
+    // body...
+    $(".zan_article").click(function () {
+        var url = $('#article_vote_url').val();
+        $("#vote_article").load(url,function(responseTxt,statusTxt,xhr){
+            if(statusTxt=="success")
+                alert(responseTxt);
+            if(statusTxt=="error")
+                alert("Error: "+xhr.status+": "+xhr.statusText);
+        });
+    });
+});

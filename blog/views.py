@@ -2,6 +2,7 @@
 from django.shortcuts import get_object_or_404,render_to_response 
 from django.http import Http404
 from blog.models import *
+from django.http import HttpResponse
 
 zen_content = '''
 Beautiful is better than ugly.
@@ -53,7 +54,11 @@ class Blog(object):
 def aboutme(request):
     pass
 
-def article(request,id='0'):
+def vote(request,id):
+    print 'vote ok'
+    return HttpResponse('vote OK')
+
+def article(request,id):
     blog = Blog()
     try:
         article = Article.objects.get(id=id)
@@ -70,7 +75,7 @@ def article(request,id='0'):
         pass
     return render_to_response('article.html', locals())
 
-def category(request,id='0'):
+def category(request,id):
     blog = Blog()
     try:
         cat = Category.objects.get(id=id)

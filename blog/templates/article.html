@@ -5,6 +5,8 @@
       <div class="article_main">
         <div class="article_title">
           <div class="zan_article">
+            <input id="article_vote_url" value="{% url 'article_vote_url' preArticle.id %}" style="display:none">
+            <div id="vote_article" style="display:none"></div>
             <p class="zan_p1">赞</p>
             <p class="zan_p2">{{ article.vote_count }}</p>
           </div>

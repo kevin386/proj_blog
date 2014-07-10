@@ -16,8 +16,10 @@ $(document).ready(function () {
     $(".zan_article").click(function () {
         var url = $('#article_vote_url').val();
         $("#vote_article").load(url,function(responseTxt,statusTxt,xhr){
-            if(statusTxt=="success")
-                alert(responseTxt);
+            if(statusTxt=="success"){
+                $(".zan_p2").text(responseTxt)
+                alert('vote success');
+            }
             if(statusTxt=="error")
                 alert("Error: "+xhr.status+": "+xhr.statusText);
         });

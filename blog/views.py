@@ -55,8 +55,10 @@ def aboutme(request):
     pass
 
 def vote(request,id):
-    print 'vote ok'
-    return HttpResponse('vote OK')
+    article = Article.objects.get(id=id)
+    article.vote_count += 1;
+    article.save()
+    return HttpResponse(article.vote_count)
 
 def article(request,id):
     blog = Blog()

@@ -71,7 +71,7 @@ class Article(models.Model):
 class Comment(models.Model):
     content = models.CharField("评论", max_length=64)
     #引用别人的评论，为其它评论的ID，保存为"1,2,3,4"
-    references = models.CharField("引用评论", max_length=128)
+    references = models.IntegerField(default=0)
     #一篇文章有多条评论（多对一关系）
     article = models.ForeignKey(Article, verbose_name="文章")
     def __unicode__(self):

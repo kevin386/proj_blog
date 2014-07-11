@@ -441,7 +441,7 @@ table {
 }
 
 
-
+/*
 .comment_title span {
 	font-weight: bold;
 }
@@ -473,4 +473,43 @@ table {
 
 .comment_item_con {
 	margin-left: 70px;
+}
+*/
+
+.comm_item{
+	position: relative;
+	left: 8px;
+	width: 99%;
+	border-bottom: 1px solid #DDDDDD;
+}
+
+.comm_item img{
+	position: absolute;
+	top:10px;
+	left: 10px;
+}
+
+.comm_body{
+	margin-left: 70px;
+}
+
+.comm_header{
+	margin-top: 10px;
+}
+.comm_content{
+	margin: 10px 0;
+}
+.comm_footer{
+	margin-bottom: 10px;
+}
+
+.comm_uname{
+	color: #379BE9;
+}
+
+.comm_vote, .comm_uname{
+	margin-right: 10px;
+}
+.comm_vote, .comm_reply{
+	color: #999999;
 }

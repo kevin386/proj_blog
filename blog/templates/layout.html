@@ -122,19 +122,14 @@
         
         <ul>
           <li><a href="{% url 'home' %}">首页</a></li>
-        {% if blog.catNav %}
-          <li>=></li>
-          <li><a href="{% url 'articles_by_cat' blog.catNav.id %}">{{ blog.catNav.name }}</a></li>
-		    {% endif %}
+          {% block category_nav %}{% endblock %}
         </ul>
         
         <form class="search">
         <input id="search" size="30"/><a href="/search" >搜索</a>
         </form>
       </div>
-      {% block content %}
-
-        {% endblock %}
+      {% block content %}{% endblock %}
       </div>
       <div class="clear"></div>
     </div>

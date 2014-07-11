@@ -1,5 +1,5 @@
 #-*- coding:utf-8 -*-
-from django.shortcuts import get_object_or_404,render_to_response 
+from django.shortcuts import get_object_or_404,render_to_response,get_list_or_404
 from django.http import Http404
 from blog.models import *
 from django.http import HttpResponse
@@ -55,23 +55,16 @@ def aboutme(request):
     pass
 
 def vote(request,id):
-    article = Article.objects.get(id=id)
+    article = get_object_or_404(Article,id=id)
     article.vote_count += 1;
     article.save()
     return HttpResponse(article.vote_count)
 
 def article(request,id):
     blog = Blog()
+    article = get_object_or_404(Article,id=id)
     try:
-        article = Article.objects.get(id=id)
-        blog.catNav = article.category
-    except Article.DoesNotExist, e:
-        raise Http404
-    try:
-        preArticle = Article.objects.get(id=str((int(id))-1));
-    except Article.DoesNotExist, e:
-        pass
-    try:
+        preArticle = Article.objects.get(id=str((int(id))-1))
         nextArticle = Article.objects.get(id=str((int(id))+1))
     except Article.DoesNotExist, e:
         pass
@@ -79,17 +72,11 @@ def article(request,id):
 
 def category(request,id):
     blog = Blog()
-    try:
-        cat = Category.objects.get(id=id)
-        articles = cat.article_set.all()
-    except Article.DoesNotExist, e:
-        raise Http404
+    cat = get_object_or_404(Category,id=id)
+    articles = get_list_or_404(cat.article_set)
     return render_to_response('index.html', locals())
 
 def home(request):
     blog = Blog()
-    try:
-        articles = Article.objects.all()
-    except Article.DoesNotExist, e:
-        raise Http404
+    articles = get_list_or_404(Article)
     return render_to_response('index.html', locals())

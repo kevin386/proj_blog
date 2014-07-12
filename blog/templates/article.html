@@ -40,22 +40,16 @@
         {% else %}
         <div id="allComments">
             <ul id="comm_list">
+                {% for comment in article.comment_set.all %}
                 <li class="comm_item">
                     <img src="{% get_static_prefix %}images/220193_50.jpg" class="comm_avata">
                     <div class="comm_body">
-                        <div class="comm_header"><a href="javascript:void(0)" class="comm_uname">风影</a><span>3小时前</span></div>
-                        <div class="comm_content">恭喜4位晋升上将，希望你们要担负起人民赋予军人的使命，再建新功</div>
-                        <div class="comm_footer"><a href="javascript:void(0)" class="comm_vote">zan(1223)</a><a href="javascript:void(0)" class="comm_reply">huifu(3)</a></div>
+                        <div class="comm_header"><a href="javascript:void(0)" class="comm_uname">{{ comment.user_name }}</a><span>{{comment.pub_date_delta}}</span></div>
+                        <div class="comm_content">{{ comment.content }}</div>
+                        <div class="comm_footer"><a href="javascript:void(0)" class="comm_vote">zan({{comment.vote_count}})</a><a href="javascript:void(0)" class="comm_reply">huifu(3)</a></div>
                     </div>
                 </li>
-                <li class="comm_item">
-                    <img src="{% get_static_prefix %}images/220193_50.jpg" class="comm_avata">
-                    <div class="comm_body">
-                        <div class="comm_header"><a href="javascript:void(0)" class="comm_uname">风影</a><span>3小时前</span></div>
-                        <div class="comm_content">恭喜4位晋升上将，希望你们要担负起人民赋予军人的使命，再建新功</div>
-                        <div class="comm_footer"><a href="javascript:void(0)" class="comm_vote">zan(1223)</a><a href="javascript:void(0)" class="comm_reply">huifu(3)</a></div>
-                    </div>
-                </li>
+                {% endfor %}
             </ul>
         </div>
         {% endif %}

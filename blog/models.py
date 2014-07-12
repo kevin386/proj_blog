@@ -42,6 +42,10 @@ class Article(models.Model):
     comment_count = property(lambda self: self.comment_set.count())
     is_yuan = property(lambda self: self.is_from == u'Y')
     is_zhuan = property(lambda self: self.is_from == u'Z')
+
+    def __unicode__(self):
+        return self.title
+    
     def pub_date_delta():
         doc = "The pub_date_delta property."
         def fget(self):
@@ -65,14 +69,72 @@ class Article(models.Model):
             del self._delta
         return locals()
     pub_date_delta = property(**pub_date_delta())
-    def __unicode__(self):
-        return self.title
+
+    def getComment():
+        def fget(self):
+            self.cmlist = []
+            def com2dict(c):
+                d = {}
+                d['comm'] = c
+                d['list'] = []
+                return d
+            def recur(objs, t, l):
+                if t > 50:
+                    return
+                for c in objs.all():
+                    d = com2dict(c)
+                    l.append(d)
+                    #print t*"  ", c.id, c.content
+                    if c.comment_set.count() > 0:
+                        recur(c.comment_set, t+1, d['list'])
+            for c in self.comment_set.filter(reply=None):
+                #print c.id, c.content
+                d = com2dict(c)
+                self.cmlist.append(d)
+                recur(c.comment_set, 0, d['list'])
+            return self.cmlist
+        return locals()
+    comments = property(**getComment())
+
+
 
 class Comment(models.Model):
+    user_name = models.CharField('用户', max_length=32)
+    email = models.EmailField("E-mail", blank=True)
     content = models.CharField("评论", max_length=64)
-    #引用别人的评论，为其它评论的ID，保存为"1,2,3,4"
-    references = models.IntegerField(default=0)
+    create_date = models.DateTimeField("创建日期",auto_now_add=True)
+    vote_count = models.IntegerField(default=0)
+    #recursion
+    reply = models.ForeignKey("self", null=True, blank=True, verbose_name="回复")
     #一篇文章有多条评论（多对一关系）
-    article = models.ForeignKey(Article, verbose_name="文章")
+    article = models.ForeignKey(Article, null=True, blank=True, verbose_name="文章")
+    
     def __unicode__(self):
         return self.content
+
+    def pub_date_delta():
+        doc = "The pub_date_delta property."
+        def fget(self):
+            today = datetime.datetime.today()
+            if today.year - self.create_date.year > 0:
+                self._delta = "%d年前" % (today.year - self.create_date.year)
+            elif today.month - self.create_date.month > 0:
+                self._delta = "%d个月前" % (today.month - self.create_date.month)
+            elif today.day - self.create_date.day > 0:
+                self._delta = "%d天前" % (today.day - self.create_date.day)
+            elif today.hour - self.create_date.hour > 0:
+                self._delta = "%d小时前" % (today.hour - self.create_date.hour)
+            elif today.minute - self.create_date.minute > 0:
+                self._delta = "%d分钟前" % (today.minute - self.create_date.minute)
+            else:
+                self._delta = ""
+            return self._delta
+        def fset(self, value):
+            self._delta = value
+        def fdel(self):
+            del self._delta
+        return locals()
+    pub_date_delta = property(**pub_date_delta())
+
+
+

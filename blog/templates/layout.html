@@ -31,109 +31,104 @@
 <script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushCpp.js"></script>
 <script type="text/javascript">SyntaxHighlighter.all();</script>
 <!-- syntaxhighlighter end -->
-
 </head>
 <body>
 <div id="container">
-  <div id="header">
-    <p class="one">{{ blog.name }}</p>
-    {% if blog.zen %}
-    <p class="three">{{ blog.zen.content }}</p>
-    {% if blog.zen.author %}
-    <p class="two">{{ blog.zen.author }}</p>
-    {% endif %}
-    {% endif %}
-  </div>
-  <!-- <div id="menu">This is the Menu</div> -->
-  <div id="mainContent">
-    <div id="sidebar">
-      <div id="owner">
-        <div id="icon">
-          <a href="{% url 'about_me' %}">
-          <img src="{% get_static_prefix %}images/IMG_Ali_01447.jpg" alt="头像" name="" width="220" height="220" />
-        </a>
-        </div>
-        {% if blog.showRequest %}
-        <div id="requst">
-          <div id="message">
-          <a href="/leaveMsg">
-          <img src="static/images/sendMessage.jpg" name="message" width="108" height="108" />
-          </a>
-          </div>
-          <a href="/askQuestion">
-          <img src="static/images/reqQuestion.jpg" width="109" height="108" />
-          </a>
-        </div>
+    <div id="header">
+        <p class="one">{{ blog.name }}</p>
+        {% if blog.zen %}
+        <p class="three">{{ blog.zen.content }}</p>
+        {% if blog.zen.author %}
+        <p class="two">{{ blog.zen.author }}</p>
         {% endif %}
-      </div>
-
-      {% if blog.categories %}
-      <div id="categories"><span class="sidetitle">博客分类</span>
-        <div class="sep"></div>
-		    <ul id="ulpic">
-        {% for cat in blog.categories %}
-          {% if cat.article_set.count > 0 %}
-          <li><a href="{% url 'articles_by_cat' cat.id %}">{{ cat.name }}({{cat.article_set.count}})</a></li>
-          {% endif %}
-		    {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-
-      {% if blog.ranks %}
-      <div id="mostRead"><span class="sidetitle">阅读排行</span>
-        <div class="sep"></div>
-        <ul id="mulnum">
-        {% for rank in blog.ranks %}
-          <li><a href="{{ rank.href }}">{{ rank.name }}</a></li>
-		    {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-
-      {% if blog.lastestComments %}
-      <div id="newestComment"><span class="sidetitle">最新评论</span>
-        <div class="sep"></div>
-        <ul >
-        {% for comment in blog.lastestComments %}
-          <li><a href="{{ comment.href }}">{{ comment.name }}</a></li>
-		    {% endfor %}
-        </ul>
-      </div>
-      {% endif %}
-
-      {% if blog.pageView %}
-      <div id="vistStatistice"><span class="sidetitle">访客统计</span>
-        <div class="sep"></div>
-        <ul>
-          <li>今日访问：{{ blog.pageView.today }}</li>
-          <li>昨日访问：{{ blog.pageView.yesterday }}</li>
-          <li>本周访问：{{ blog.pageView.week }}</li>
-          <li>本月访问：{{ blog.pageView.month }}</li>
-          <li>所有访问：{{ blog.pageView.total }}</li>
-        </ul>
-      </div>
-      {% endif %}
-
+        {% endif %}
     </div>
-    <div id="content">
-      
-      <div id="top_div">
-        
-        <ul>
-          <li><a href="{% url 'home' %}">首页</a></li>
-          {% block category_nav %}{% endblock %}
-        </ul>
-        
-        <form class="search">
-        <input id="search" size="30"/><a href="/search" >搜索</a>
-        </form>
-      </div>
-      {% block content %}{% endblock %}
-      </div>
-      <div class="clear"></div>
+    <!-- <div id="menu">This is the Menu</div> -->
+    <div id="mainContent">
+        <div id="sidebar">
+            <div id="owner">
+                <div id="icon">
+                    <a href="{% url 'about_me' %}">
+                    <img src="{% get_static_prefix %}images/IMG_Ali_01447.jpg" alt="头像" name="" width="220" height="220" />
+                    </a>
+                </div>
+                {% if blog.showRequest %}
+                <div id="requst">
+                    <div id="message">
+                        <a href="/leaveMsg">
+                        <img src="static/images/sendMessage.jpg" name="message" width="108" height="108" />
+                        </a>
+                    </div>
+                    <a href="/askQuestion">
+                    <img src="static/images/reqQuestion.jpg" width="109" height="108" />
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if blog.categories %}
+            <div id="categories"><span class="sidetitle">博客分类</span>
+                <div class="sep"></div>
+                <ul id="ulpic">
+                    {% for cat in blog.categories %}
+                    {% if cat.article_set.count > 0 %}
+                    <li><a href="{% url 'articles_by_cat' cat.id %}">{{ cat.name }}({{cat.article_set.count}})</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if blog.ranks %}
+            <div id="mostRead"><span class="sidetitle">阅读排行</span>
+                <div class="sep"></div>
+                <ul id="mulnum">
+                    {% for rank in blog.ranks %}
+                    <li><a href="{{ rank.href }}">{{ rank.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if blog.lastestComments %}
+            <div id="newestComment"><span class="sidetitle">最新评论</span>
+                <div class="sep"></div>
+                <ul >
+                    {% for comment in blog.lastestComments %}
+                    <li><a href="{{ comment.href }}">{{ comment.name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if blog.pageView %}
+            <div id="vistStatistice"><span class="sidetitle">访客统计</span>
+                <div class="sep"></div>
+                <ul>
+                    <li>今日访问：{{ blog.pageView.today }}</li>
+                    <li>昨日访问：{{ blog.pageView.yesterday }}</li>
+                    <li>本周访问：{{ blog.pageView.week }}</li>
+                    <li>本月访问：{{ blog.pageView.month }}</li>
+                    <li>所有访问：{{ blog.pageView.total }}</li>
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        <div id="content">
+            <div id="top_div">
+                <ul>
+                    <li><a href="{% url 'home' %}">首页</a></li>
+                    {% block category_nav %}{% endblock %}
+                </ul>
+                <form class="search">
+                    <input id="search" size="30"/><a href="/search" >搜索</a>
+                </form>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+        <div class="clear"></div>
     </div>
     <div id="footer">copyright</div>
-  </div>
+</div>
 </body>
 </html>

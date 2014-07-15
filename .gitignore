@@ -55,5 +55,6 @@ docs/_build/
 # database config info
 psw.cfg
 
-
+# ignore south script files
+blog/migrations/*
 

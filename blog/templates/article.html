@@ -20,6 +20,9 @@
         </div>
         <p class="tp1"> {% if article.is_yuan %} <span class="yuan">原</span> {% else %}{% if article.is_zhuan %} <span class="zhuan">转</span> {% endif %}{% endif %}<span class="atitle">{{ article.title }}</span> </p>
         <p class="tp2">发表于{{ article.pub_date_delta}}({{ article.pub_date|date:"Y-m-d H:i" }})&nbsp;&nbsp;&nbsp;阅读（<span>{{ article.view_count }}</span>）&nbsp;|评论（<span>{{ article.comment_count }}</span>）</p>
+        {% if article.origin %}
+        <p class="tp3">来源: {{ article.origin }}</p>
+        {% endif %}
     </div>
     <div class="article_t_sep"></div>
     <div class="article_content"> {{ article.content|safe }} </div>

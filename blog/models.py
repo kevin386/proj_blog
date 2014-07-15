@@ -36,6 +36,7 @@ class Article(models.Model):
     content = models.TextField("内容")
     create_date = models.DateTimeField("创建日期",auto_now_add=True)
     pub_date = models.DateTimeField("发布日期",auto_now=True)
+    origin = models.URLField("来源",null=True,blank=True)
     is_from = models.CharField("来自", max_length=1, default='Y', choices=(('Y','yuanchuang'),('Z','zhuanzai')))
     view_count = models.IntegerField("访问量统计", default=0)
     vote_count = models.IntegerField("支持量统计", default=0)

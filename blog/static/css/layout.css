@@ -168,6 +168,11 @@ table {
 #footer {
 	height:60px;
 	background:#9c6;
+	line-height: 60px;
+}
+#footer p{
+	width: 200px;
+	margin: 0 auto;
 }
 #sidebar #owner #signature {
 	height: 58px;

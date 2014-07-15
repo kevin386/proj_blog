@@ -78,5 +78,8 @@ def category(request,id):
 
 def home(request):
     blog = Blog()
-    articles = get_list_or_404(Article)
+    try:
+        articles = Article.objects.all()
+    except Exception, e:
+        pass
     return render_to_response('index.html', locals())

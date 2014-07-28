@@ -23,6 +23,9 @@
         {% if article.origin %}
         <p class="tp3">来源: {{ article.origin }}</p>
         {% endif %}
+		<p class="tp_jiathis">
+		{% include "jia_this.html" %}
+		</p>
     </div>
     <div class="article_t_sep"></div>
     <div class="article_content"> {{ article.content|safe }} </div>

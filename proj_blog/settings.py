@@ -59,7 +59,8 @@ WSGI_APPLICATION = 'proj_blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-if not DEBUG:
+#if not DEBUG:
+if True:
     import ConfigParser as CP
     configPath = os.path.join(BASE_DIR,'psw.cfg')
     config = CP.ConfigParser()

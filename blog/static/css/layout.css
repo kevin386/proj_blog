@@ -304,8 +304,9 @@ table {
 	float: right;
 }
 .article_main .article_title {
-	padding:20px 15px 7px 15px;
+	padding:20px 15px 20px 15px;
 	background-color: #FFF;
+	line-height: 25px;
 }
 .article_title .tp1 {
 	font-size: 24px;

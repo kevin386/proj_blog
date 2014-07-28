@@ -519,3 +519,12 @@ table {
 .comm_vote, .comm_reply{
 	color: #999999;
 }
+.prompt_vote{
+	position: absolute;
+	background-color:#7c2c83;
+	color: #ffffff;
+	top:250px;
+	left:700px;
+	padding:10px;
+	display:none;
+}

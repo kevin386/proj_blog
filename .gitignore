@@ -58,3 +58,4 @@ psw.cfg
 # ignore south script files
 blog/migrations/*
 db.sqlite3
+static/*

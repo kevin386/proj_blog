@@ -292,11 +292,24 @@ table {
 	text-decoration:none;
 	color:#FFFFFF;
 }
-.search #search {
+#search_content {
 	margin:auto;
 	height: 22px;
 	vertical-align:middle;
 }
+#search_button{
+	font-size: 16px;
+	background-color: #5CC26F;
+	vertical-align:middle;
+	padding: 2px;
+	margin-top: auto;
+	margin-right: 5px;
+	margin-bottom: auto;
+	margin-left: auto;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+
 .zan_article {
 	background-color: #5CC26F;
 	height: 56px;

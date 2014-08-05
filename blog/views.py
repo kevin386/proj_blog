@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404,render_to_response,get_list_or_40
 from django.http import Http404
 from blog.models import *
 from django.http import HttpResponse
+from django.template import RequestContext
 
 zen_content = '''
 Beautiful is better than ugly.
@@ -49,14 +50,22 @@ class Blog(object):
         try:
             self.categories = [cat for cat in Category.objects.all()]
         except Category.DoesNotExist, e:
-            raise Http404
+            pass
 
-def aboutme(request):
-    pass
+def search_articel(request):
+    blog = Blog()
+    content = request.POST.get('search_content')
+    print content
+    articles = Article.objects.filter(title__icontains=content)
+    return render_to_response('index.html', locals(), context_instance=RequestContext(request))
+
+def about_me(request):
+    blog = Blog()
+    return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 def vote(request,id):
     article = get_object_or_404(Article,id=id)
-    article.vote_count += 1;
+    article.vote_count += 1
     article.save()
     return HttpResponse(article.vote_count)
 
@@ -68,13 +77,13 @@ def article(request,id):
         nextArticle = Article.objects.get(id=str((int(id))+1))
     except Article.DoesNotExist, e:
         pass
-    return render_to_response('article.html', locals())
+    return render_to_response('article.html', locals(), context_instance=RequestContext(request))
 
 def category(request,id):
     blog = Blog()
     cat = get_object_or_404(Category,id=id)
     articles = get_list_or_404(cat.article_set)
-    return render_to_response('index.html', locals())
+    return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 def home(request):
     blog = Blog()
@@ -82,4 +91,4 @@ def home(request):
         articles = Article.objects.all()
     except Exception, e:
         pass
-    return render_to_response('index.html', locals())
+    return render_to_response('index.html', locals(), context_instance=RequestContext(request))

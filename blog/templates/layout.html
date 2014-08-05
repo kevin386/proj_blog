@@ -121,8 +121,10 @@
                     <li><a href="{% url 'home' %}">首页</a></li>
                     {% block category_nav %}{% endblock %}
                 </ul>
-                <form class="search">
-                    <input id="search" size="30"/><a href="/search" >搜索</a>
+                <form class="search" action="{% url 'search_articel' %}" method="post">
+                    {% csrf_token %}
+                    <input id="search_content" name="search_content" size="30"/>
+                    <input type="submit" id="search_button" value="搜索">
                 </form>
             </div>
             {% block content %}{% endblock %}

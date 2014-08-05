@@ -24,4 +24,9 @@ $(document).ready(function () {
                 alert("Error: "+xhr.status+": "+xhr.statusText);
         });
     });
+    $("#search_button").click(function(){
+        if ($("#search_content").value != "") {
+            $("form .search").submit();
+        };
+    });
 });

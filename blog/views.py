@@ -64,22 +64,28 @@ def article(request,id):
     blog = Blog()
     article = get_object_or_404(Article,id=id)
     try:
-        preArticle = Article.objects.get(id=str((int(id))-1))
-        nextArticle = Article.objects.get(id=str((int(id))+1))
+		preArticle = Article.objects.filter(pub_date__gt=article.pub_date).order_by('pub_date').first()
     except Article.DoesNotExist, e:
-        pass
+        preArticle = [] 
+    try:
+        nextArticle = Article.objects.filter(pub_date__lt=article.pub_date).order_by('pub_date').last()
+    except Article.DoesNotExist, e:
+        nextArticle = [] 
     return render_to_response('article.html', locals())
 
 def category(request,id):
     blog = Blog()
     cat = get_object_or_404(Category,id=id)
-    articles = get_list_or_404(cat.article_set)
+    try:
+        articles = cat.article_set.all().order_by('-pub_date')
+    except Exception, e:
+        pass
     return render_to_response('index.html', locals())
 
 def home(request):
     blog = Blog()
     try:
-        articles = Article.objects.all()
+        articles = Article.objects.all().order_by('-pub_date')
     except Exception, e:
         pass
     return render_to_response('index.html', locals())

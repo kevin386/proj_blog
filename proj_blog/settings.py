@@ -24,11 +24,13 @@ TEMPLATE_DIRS = (
 SECRET_KEY = '2tpji9&$=xic@ytaqiq4$1&f*rj&&p$k3c!0o9q)x6v4el2t#4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+#TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -59,7 +61,8 @@ WSGI_APPLICATION = 'proj_blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-if not DEBUG:
+#if not DEBUG:
+if True:
     import ConfigParser as CP
     configPath = os.path.join(BASE_DIR,'psw.cfg')
     config = CP.ConfigParser()

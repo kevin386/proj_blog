@@ -317,8 +317,9 @@ table {
 	float: right;
 }
 .article_main .article_title {
-	padding:20px 15px 7px 15px;
+	padding:20px 15px 20px 15px;
 	background-color: #FFF;
+	line-height: 25px;
 }
 .article_title .tp1 {
 	font-size: 24px;
@@ -530,4 +531,13 @@ table {
 }
 .comm_vote, .comm_reply{
 	color: #999999;
+}
+.prompt_vote{
+	position: absolute;
+	background-color:#7c2c83;
+	color: #ffffff;
+	top:250px;
+	left:700px;
+	padding:10px;
+	display:none;
 }

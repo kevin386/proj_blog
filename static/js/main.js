@@ -19,16 +19,15 @@ $(document).ready(function () {
             if(statusTxt=="success"){
                 $(".zan_p2").text(responseTxt)
                 //alert('vote success');
-                var w = ($(window).width() - $(".prompt_vote").width()) / 2;
-                //var h = ($(window).height() - $(".prompt_vote").height()) / 2;
-                $(".prompt_vote").css("left",w);
-                $(".prompt_vote").css("display","block");
-                //$(".prompt_vote").css("top",h);
-                $(".prompt_vote").fadeOut(3000);
+				var w = ($(window).width() - $(".prompt_vote").width()) / 2;
+				//var h = ($(window).height() - $(".prompt_vote").height()) / 2;
+				$(".prompt_vote").css("left",w);
+				$(".prompt_vote").css("display","block");
+				//$(".prompt_vote").css("top",h);
+				$(".prompt_vote").fadeOut(3000);
             }
             if(statusTxt=="error")
                 alert("Error: "+xhr.status+": "+xhr.statusText);
         });
     });
 });
-

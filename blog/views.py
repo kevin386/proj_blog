@@ -55,10 +55,14 @@ def aboutme(request):
     pass
 
 def vote(request,id):
-    article = get_object_or_404(Article,id=id)
-    article.vote_count += 1;
-    article.save()
-    return HttpResponse(article.vote_count)
+    vote_count = 0
+    if not request.session.get('has_voted_'+str(id), False):
+        article = get_object_or_404(Article,id=id)
+        article.vote_count += 1;
+        article.save()
+        vote_count = article.vote_count
+        request.session['has_voted_'+str(id)] = True
+    return HttpResponse(vote_count)
 
 def article(request,id):
     blog = Blog()

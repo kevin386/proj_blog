@@ -11,9 +11,9 @@
 
 {% block content %}
 <div class="article_main">
-	<div class="prompt_vote">
-		Vote success 
-	</div>
+    <div class="prompt_vote">
+        Vote success 
+    </div>
     <div class="article_title">
         <div class="zan_article">
             <input id="article_vote_url" value="{% url 'article_vote_url' article.id %}" style="display:none">
@@ -28,7 +28,7 @@
         {% if article.origin %}
         <p class="tp3">来源: {{ article.origin }}</p>
         {% endif %}
-		{% include "jia_this.html" %}
+        {% include "jia_this.html" %}
     </div>
     <div class="article_t_sep"></div>
     <div class="article_content"> {{ article.content|safe }} </div>

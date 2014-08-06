@@ -30,7 +30,7 @@ $(document).ready(function () {
                 $(".prompt_vote").css("display","block");
                 //$(".prompt_vote").css("top",h);
                 setTimeout(function(){
-				    $(".prompt_vote").fadeOut(3000);
+                    $(".prompt_vote").fadeOut(3000);
                 }, 2000);
             }
             if(statusTxt=="error")

@@ -18,8 +18,10 @@
         <div class="zan_article">
             <input id="article_vote_url" value="{% url 'article_vote_url' article.id %}" style="display:none">
             <div id="vote_article" style="display:none"></div>
+            <a href="javascript:void(0)">
             <p class="zan_p1">赞</p>
             <p class="zan_p2">{{ article.vote_count }}</p>
+            </a>
         </div>
         <p class="tp1"> {% if article.is_yuan %} <span class="yuan">原</span> {% else %}{% if article.is_zhuan %} <span class="zhuan">转</span> {% endif %}{% endif %}<span class="atitle">{{ article.title }}</span> </p>
         <p class="tp2">发表于{{ article.pub_date_delta}}({{ article.pub_date|date:"Y-m-d H:i" }})&nbsp;&nbsp;&nbsp;阅读（<span>{{ article.view_count }}</span>）&nbsp;|评论（<span>{{ article.comment_count }}</span>）</p>

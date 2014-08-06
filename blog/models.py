@@ -1,6 +1,7 @@
 #-*- coding:utf-8 -*-
 from django.db import models
 import datetime
+from utils import utils
 
 class PageView(models.Model):
     today = models.IntegerField("今日访问量",default=0)
@@ -47,57 +48,34 @@ class Article(models.Model):
     def __unicode__(self):
         return self.title
     
-    def pub_date_delta():
-        doc = "The pub_date_delta property."
-        def fget(self):
-            today = datetime.datetime.today()
-            if today.year - self.pub_date.year > 0:
-                self._delta = "%d年前" % (today.year - self.pub_date.year)
-            elif today.month - self.pub_date.month > 0:
-                self._delta = "%d个月前" % (today.month - self.pub_date.month)
-            elif today.day - self.pub_date.day > 0:
-                self._delta = "%d天前" % (today.day - self.pub_date.day)
-            elif today.hour - self.pub_date.hour > 0:
-                self._delta = "%d小时前" % (today.hour - self.pub_date.hour)
-            elif today.minute - self.pub_date.minute > 0:
-                self._delta = "%d分钟前" % (today.minute - self.pub_date.minute)
-            else:
-                self._delta = ""
-            return self._delta
-        def fset(self, value):
-            self._delta = value
-        def fdel(self):
-            del self._delta
-        return locals()
-    pub_date_delta = property(**pub_date_delta())
+    @property
+    def pub_date_delta(self):
+        d = self.pub_date
+        return utils.getTimeDelta(d.year,d.month,d.day,d.hour,d.minute)
 
-    def getComment():
-        def fget(self):
-            self.cmlist = []
-            def com2dict(c):
-                d = {}
-                d['comm'] = c
-                d['list'] = []
-                return d
-            def recur(objs, t, l):
-                if t > 50:
-                    return
-                for c in objs.all():
-                    d = com2dict(c)
-                    l.append(d)
-                    #print t*"  ", c.id, c.content
-                    if c.comment_set.count() > 0:
-                        recur(c.comment_set, t+1, d['list'])
-            for c in self.comment_set.filter(reply=None):
-                #print c.id, c.content
+    @property
+    def comments(self):
+        self.cmlist = []
+        def com2dict(c):
+            d = {}
+            d['comm'] = c
+            d['list'] = []
+            return d
+        def recur(objs, t, l):
+            if t > 50:
+                return
+            for c in objs.all():
                 d = com2dict(c)
-                self.cmlist.append(d)
-                recur(c.comment_set, 0, d['list'])
-            return self.cmlist
-        return locals()
-    comments = property(**getComment())
-
-
+                l.append(d)
+                #print t*"  ", c.id, c.content
+                if c.comment_set.count() > 0:
+                    recur(c.comment_set, t+1, d['list'])
+        for c in self.comment_set.filter(reply=None):
+            #print c.id, c.content
+            d = com2dict(c)
+            self.cmlist.append(d)
+            recur(c.comment_set, 0, d['list'])
+        return self.cmlist
 
 class Comment(models.Model):
     user_name = models.CharField('用户', max_length=32)
@@ -113,29 +91,9 @@ class Comment(models.Model):
     def __unicode__(self):
         return self.content
 
-    def pub_date_delta():
-        doc = "The pub_date_delta property."
-        def fget(self):
-            today = datetime.datetime.today()
-            if today.year - self.create_date.year > 0:
-                self._delta = "%d年前" % (today.year - self.create_date.year)
-            elif today.month - self.create_date.month > 0:
-                self._delta = "%d个月前" % (today.month - self.create_date.month)
-            elif today.day - self.create_date.day > 0:
-                self._delta = "%d天前" % (today.day - self.create_date.day)
-            elif today.hour - self.create_date.hour > 0:
-                self._delta = "%d小时前" % (today.hour - self.create_date.hour)
-            elif today.minute - self.create_date.minute > 0:
-                self._delta = "%d分钟前" % (today.minute - self.create_date.minute)
-            else:
-                self._delta = ""
-            return self._delta
-        def fset(self, value):
-            self._delta = value
-        def fdel(self):
-            del self._delta
-        return locals()
-    pub_date_delta = property(**pub_date_delta())
-
+    @property
+    def pub_date_delta(self):
+        d = self.create_date
+        return utils.getTimeDelta(d.year,d.month,d.day,d.hour,d.minute)
 
 

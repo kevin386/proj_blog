@@ -52,6 +52,30 @@ class Blog(object):
         except Category.DoesNotExist, e:
             pass
 
+def submit_comment(request,id):
+    blog = Blog()
+    errors = []
+    content = request.POST.get('comment_content')
+    user_name = request.POST.get('user_name')
+    email = request.POST.get('email')
+    if not user_name:
+        errors.append("Please input user name!")
+    if not content:
+        errors.append("Please input content!")
+    if user_name and content:
+        article = get_object_or_404(Article,id=id)
+        com = Comment(user_name=user_name,email=email,content=content,article=article)
+        com.save()
+        try:
+            preArticle = Article.objects.filter(pub_date__gt=article.pub_date).order_by('pub_date').first()
+        except Article.DoesNotExist, e:
+            preArticle = [] 
+        try:
+            nextArticle = Article.objects.filter(pub_date__lt=article.pub_date).order_by('pub_date').last()
+        except Article.DoesNotExist, e:
+            nextArticle = [] 
+    return render_to_response('article.html', locals(), context_instance=RequestContext(request))
+
 def search_articel(request):
     blog = Blog()
     content = request.POST.get('search_content')

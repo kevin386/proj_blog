@@ -65,8 +65,22 @@
         <div class="article_comment_form">
             <!--<img src="images/portrait.gif" /> -->
             <div class="input_omment">
-            <textarea></textarea>
-            <p> <a href="{{ article.submitComment.href }}">发表评论</a> </p>
+                {% for e in errors %}
+                <p>{{ e }}</p>
+                {% endfor %}
+            <form class="alt_comment_form" action="{% url 'submit_comment' article.id %}" method="post">
+                {% csrf_token %}
+                <p>
+                称呼：<input type="text" id="user_name" name="user_name">
+                </p>
+                <p>
+                E-mail：<input type="text" id="email" name="email">
+                </p>
+                <textarea id="comment_content" name="comment_content"></textarea>
+                <p>
+                <input type="submit" id="search_button" value="发表评论">
+                </p>
+            </form>
             </div>
         </div>
     </div>

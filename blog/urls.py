@@ -6,6 +6,7 @@ urlpatterns = patterns('blog.views',
     url(r'vote/(?P<id>\d{1,5})/$', 'vote', name='article_vote_url'),
     url(r'aboutme/$', 'about_me', name="about_me"),
     url(r'search/$', 'search_articel', name="search_articel"),
+    url(r'comment/(?P<id>\d{1,5})/$', 'submit_comment', name="submit_comment"),
 )
 
 

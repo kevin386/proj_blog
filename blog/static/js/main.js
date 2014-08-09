@@ -37,5 +37,17 @@ $(document).ready(function () {
                 alert("Error: "+xhr.status+": "+xhr.statusText);
         });
     });
+    $("#search_button").mouseenter(function(){
+        $("#search_button").css("background-color","#009F00");
+    });
+    $("#search_button").mouseleave(function(){
+        $("#search_button").css("background-color","#5CC26F");
+    });
+    $(".zan_article").mouseenter(function(){
+        $(".zan_article").css("background-color","#009F00");
+    });
+    $(".zan_article").mouseleave(function(){
+        $(".zan_article").css("background-color","#5CC26F");
+    });
 });
 

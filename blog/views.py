@@ -55,7 +55,6 @@ class Blog(object):
 def search_articel(request):
     blog = Blog()
     content = request.POST.get('search_content')
-    print content
     articles = Article.objects.filter(title__icontains=content)
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 

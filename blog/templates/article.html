@@ -68,19 +68,19 @@
                 {% for e in errors %}
                 <p>{{ e }}</p>
                 {% endfor %}
-            <form class="alt_comment_form" action="{% url 'submit_comment' article.id %}" method="post">
-                {% csrf_token %}
-                <p>
-                称呼：<input type="text" id="user_name" name="user_name">
-                </p>
-                <p>
-                E-mail：<input type="text" id="email" name="email">
-                </p>
-                <textarea id="comment_content" name="comment_content"></textarea>
-                <p>
-                <input type="submit" id="search_button" value="发表评论">
-                </p>
-            </form>
+                <form class="alt_comment_form" action="{% url 'submit_comment' article.id %}" method="post">
+                    {% csrf_token %}
+                    <div class="com_line">
+                    <div class="flag">昵&nbsp;&nbsp;&nbsp;称</div><input type="text" id="user_name" name="user_name">
+                    </div>
+                    <div class="com_line">
+                    <div class="flag">E-mail</div><input type="text" id="email" name="email">
+                    </div>
+                    <textarea id="comment_content" name="comment_content"></textarea>
+                    <p>
+                    <input type="submit" id="search_button" value="发表评论">
+                    </p>
+                </form>
             </div>
         </div>
     </div>

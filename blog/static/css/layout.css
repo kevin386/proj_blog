@@ -316,18 +316,8 @@ table {
 	width: 50px;
 	float: right;
 }
-.zan_article a:hover {
-	background-color:#009F00;
-	text-decoration:none;
-	color:#FFFFFF;
-}
-.zan_article a:active {
-	background-color:#009F00;
-	text-decoration:none;
-	color:#FFFFFF;
-}
 .article_main .article_title {
-	padding:20px 15px 20px 15px;
+	padding:20px 15px 7px 15px;
 	background-color: #FFF;
 	line-height: 25px;
 }
@@ -384,7 +374,7 @@ table {
 	line-height: 50px;
 }
 .article_comment_form textarea {
-	width: 100%;
+	width: 99.6%;
 	height: 100px;
 	margin-bottom: 7px;
 	border: 1px solid #ABADB3;
@@ -550,4 +540,24 @@ table {
 	left:700px;
 	padding:10px;
 	display:none;
+}
+
+.alt_comment_form {
+	background-color: #EAEAEA;
+	padding-bottom: 10px;
+	padding-left: 5px;
+}
+
+.alt_comment_form .com_line{
+	line-height: 30px;
+}
+
+.alt_comment_form .flag{
+	width: 40px;
+	display: inline-block;
+	margin-left: 2px;
+}
+
+.alt_comment_form input{
+	border: solid 1px #999999;
 }

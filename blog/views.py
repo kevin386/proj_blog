@@ -2,8 +2,9 @@
 from django.shortcuts import get_object_or_404,render_to_response,get_list_or_404
 from django.http import Http404
 from blog.models import *
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
+from django.core.urlresolvers import reverse
 
 zen_content = '''
 Beautiful is better than ugly.
@@ -74,7 +75,7 @@ def submit_comment(request,id):
             nextArticle = Article.objects.filter(pub_date__lt=article.pub_date).order_by('pub_date').last()
         except Article.DoesNotExist, e:
             nextArticle = [] 
-    return render_to_response('article.html', locals(), context_instance=RequestContext(request))
+    return HttpResponseRedirect(reverse("article_by_id", kwargs={"id":id}))
 
 def search_articel(request):
     blog = Blog()

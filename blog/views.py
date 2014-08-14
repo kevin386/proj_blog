@@ -59,22 +59,10 @@ def submit_comment(request,id):
     content = request.POST.get('comment_content')
     user_name = request.POST.get('user_name')
     email = request.POST.get('email')
-    if not user_name:
-        errors.append("Please input user name!")
-    if not content:
-        errors.append("Please input content!")
     if user_name and content:
         article = get_object_or_404(Article,id=id)
         com = Comment(user_name=user_name,email=email,content=content,article=article)
         com.save()
-        try:
-            preArticle = Article.objects.filter(pub_date__gt=article.pub_date).order_by('pub_date').first()
-        except Article.DoesNotExist, e:
-            preArticle = [] 
-        try:
-            nextArticle = Article.objects.filter(pub_date__lt=article.pub_date).order_by('pub_date').last()
-        except Article.DoesNotExist, e:
-            nextArticle = [] 
     return HttpResponseRedirect(reverse("article_by_id", kwargs={"id":id}))
 
 def search_articel(request):

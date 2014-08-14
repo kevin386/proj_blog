@@ -571,6 +571,8 @@ table {
 	margin-left: 2px;
 }
 
-.alt_comment_form input{
+#comment_button{
 	border: solid 1px #999999;
+	background-color: #5CC26F;
+	color: #fff;
 }

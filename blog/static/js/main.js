@@ -49,5 +49,11 @@ $(document).ready(function () {
     $(".zan_article").mouseleave(function(){
         $(".zan_article").css("background-color","#5CC26F");
     });
+    $("#comment_button").mouseenter(function(){
+        $("#comment_button").css("background-color","#009F00");
+    });
+    $("#comment_button").mouseleave(function(){
+        $("#comment_button").css("background-color","#5CC26F");
+    });  
 });
 

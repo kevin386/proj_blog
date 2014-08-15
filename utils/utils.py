@@ -27,7 +27,7 @@ def getTimeDelta(date):
     print "delta: ", delta
     daysOflastYear = getDaysOfYear(today.year)
     daysOflastMonth = getDaysOfMonth(today.year,today.month)
-    delStr = None
+    delStr = date
     if delta.days > daysOflastYear:
         delStr = "%d年前" % (delta.days / daysOflastYear)
     elif delta.days > daysOflastMonth:

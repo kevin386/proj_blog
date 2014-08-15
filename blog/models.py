@@ -48,6 +48,9 @@ class Article(models.Model):
 
     def __unicode__(self):
         return self.title
+
+    class Meta:
+        ordering=['-pub_date']
     
     @property
     def pub_date_delta(self):
@@ -90,6 +93,9 @@ class Comment(models.Model):
     #一篇文章有多条评论（多对一关系）
     article = models.ForeignKey(Article, null=True, blank=True, verbose_name="文章")
     
+    class Meta:
+        ordering=['-create_date']
+
     def __unicode__(self):
         return self.content
 

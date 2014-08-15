@@ -339,10 +339,7 @@ table {
 .article_comment {
 	background-color: #FFF;
 	border: 1px solid #EEE;
-	margin-top: auto;
-	margin-right: auto;
-	margin-bottom: 10px;
-	margin-left: auto;
+	margin: 10px auto;
 }
 .comment_item {
 	padding-bottom: 20px;
@@ -353,7 +350,6 @@ table {
 .article_comment_form {
 	background-color: #FFF;
 	border: 1px solid #EEE;
-	margin-bottom: 30px;
 	padding-bottom:5px;
 }
 #footer_sep {
@@ -402,7 +398,7 @@ table {
 .article_content {
 	color: #333;
 	padding:10px 15px 10px 15px;
-	margin:auto auto 5px auto;
+	margin:5px auto;
 	font-size: 14px;
 	word-spacing: normal;
 	letter-spacing: normal;
@@ -413,7 +409,7 @@ table {
 .article_nav {
 	background-color: #FFF;
 	border: 1px solid #EEE;
-	margin:auto auto 5px auto;
+	margin: 5px auto;
 }
 .article_main .article_t_sep {
 	background-color: #5CC26F;

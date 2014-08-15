@@ -32,6 +32,7 @@
     </div>
     <div class="article_t_sep"></div>
     <div class="article_content"> {{ article.content|safe }} </div>
+    <div class="article_t_sep"></div>
     <div class="article_nav">
         {% if preArticle %}
         <p id="pre_article"><a href="{% url 'article_by_id' preArticle.id %}">上一篇&gt;&gt; {{ preArticle.title }}</a></p>
@@ -43,25 +44,7 @@
 
     <div class="article_comment">
         <p id="comment_p1">评论({{ article.comment_count }})</p>
-        <div id="comment_sep"></div>
-        {% if article.comment_count == 0 %}
-        <p id="comment_p2">尚无网友评论</p>
-        {% else %}
-        <div id="allComments">
-            <ul id="comm_list">
-                {% for comment in article.comment_set.all %}
-                <li class="comm_item">
-                    <img src="{% get_static_prefix %}images/220193_50.jpg" class="comm_avata">
-                    <div class="comm_body">
-                        <div class="comm_header"><a href="javascript:void(0)" class="comm_uname">{{ comment.user_name }}</a><span>{{comment.pub_date_delta}}</span></div>
-                        <div class="comm_content">{{ comment.content }}</div>
-                        <div class="comm_footer"><a href="javascript:void(0)" class="comm_vote">zan({{comment.vote_count}})</a><a href="javascript:void(0)" class="comm_reply">huifu(3)</a></div>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
+        <!-- <div id="comment_sep"></div> -->
         <div class="article_comment_form">
             <!--<img src="images/portrait.gif" /> -->
             <div class="input_omment">
@@ -83,6 +66,27 @@
                 </form>
             </div>
         </div>
+
+
+        {% if article.comment_count == 0 %}
+        <p id="comment_p2">尚无网友评论</p>
+        {% else %}
+        <div id="allComments">
+            <ul id="comm_list">
+                {% for comment in article.comment_set.all %}
+                <li class="comm_item">
+                    <img src="{% get_static_prefix %}images/220193_50.jpg" class="comm_avata">
+                    <div class="comm_body">
+                        <div class="comm_header"><a href="javascript:void(0)" class="comm_uname">{{ comment.user_name }}</a><span>{{comment.pub_date_delta}}</span></div>
+                        <div class="comm_content">{{ comment.content }}</div>
+                        <div class="comm_footer"><a href="javascript:void(0)" class="comm_vote">zan({{comment.vote_count}})</a><a href="javascript:void(0)" class="comm_reply">huifu(3)</a></div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
     </div>
 </div>
 {% endblock %}

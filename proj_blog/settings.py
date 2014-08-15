@@ -24,11 +24,9 @@ TEMPLATE_DIRS = (
 SECRET_KEY = '2tpji9&$=xic@ytaqiq4$1&f*rj&&p$k3c!0o9q)x6v4el2t#4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = True
-DEBUG = False
+DEBUG = True
 
-#TEMPLATE_DEBUG = True
-TEMPLATE_DEBUG = False
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -61,35 +59,12 @@ WSGI_APPLICATION = 'proj_blog.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-#if not DEBUG:
-if True:
-    import ConfigParser as CP
-    configPath = os.path.join(BASE_DIR,'psw.cfg')
-    config = CP.ConfigParser()
-    with open(configPath, 'r') as cfgfile:
-        config.readfp(cfgfile)
-        user = config.get("dbinfo",'user')
-        psw = config.get("dbinfo",'psw')
-        host = config.get("dbinfo",'host')
-        port = config.get("dbinfo",'port')
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'proj_blog',                      # Or path to database file if using sqlite3.
-            'USER': user,                      # Not used with sqlite3.
-            'PASSWORD': psw,                  # Not used with sqlite3.
-            'HOST': host,                      # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': port,                      # Set to empty string for default. Not used with sqlite3.
-        }
-    }
-else:
-    DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.sqlite3',
-           'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-       }
-    }
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.sqlite3',
+       'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+   }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/

@@ -20,20 +20,25 @@ def getDaysOfYear(year):
         return sum(days1)
 
 def getTimeDelta(date):
+    print "date: ", date
     today = datetime.datetime.today()
+    print "today: ", today
     delta = today - date
+    print "delta: ", delta
     daysOflastYear = getDaysOfYear(today.year)
     daysOflastMonth = getDaysOfMonth(today.year,today.month)
+    delStr = None
     if delta.days > daysOflastYear:
-        return "%d年前" % (delta.days / daysOflastYear)
+        delStr = "%d年前" % (delta.days / daysOflastYear)
     elif delta.days > daysOflastMonth:
-        return "%d个月前" % (delta.days / daysOflastMonth)
+        delStr = "%d个月前" % (delta.days / daysOflastMonth)
     elif delta.days > 0:
-        return "%d天前" % delta.days
+        delStr = "%d天前" % delta.days
     elif delta.days == 0:
         if delta.seconds > 3600:
-            return "%d小时前" % (delta.seconds / 3600)
+            delStr = "%d小时前" % (delta.seconds / 3600)
         elif delta.seconds > 60:
-            return "%d分钟前" % (delta.seconds / 60)
-    else:
-        return "刚刚"
+            delStr = "%d分钟前" % (delta.seconds / 60)
+        else:
+            delStr = "刚刚"
+    return delStr

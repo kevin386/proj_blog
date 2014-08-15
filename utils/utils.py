@@ -19,9 +19,9 @@ def getDaysOfYear(year):
     else:
         return sum(days1)
 
-def getTimeDelta(year,month,day,hour,minute):
+def getTimeDelta(date):
     today = datetime.datetime.today()
-    delta = today - datetime.datetime(year,month,day,hour,minute)
+    delta = today - date
     daysOflastYear = getDaysOfYear(today.year)
     daysOflastMonth = getDaysOfMonth(today.year,today.month)
     if delta.days > daysOflastYear:

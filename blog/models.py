@@ -2,6 +2,7 @@
 from django.db import models
 import datetime
 from utils import utils
+from django.utils import timezone
 
 class PageView(models.Model):
     today = models.IntegerField("今日访问量",default=0)
@@ -50,8 +51,9 @@ class Article(models.Model):
     
     @property
     def pub_date_delta(self):
-        d = self.pub_date
-        return utils.getTimeDelta(d.year,d.month,d.day,d.hour,d.minute)
+        d = timezone.localtime(self.pub_date)
+        date = datetime.datetime(d.year,d.month,d.day,d.hour,d.minute, d.second)
+        return utils.getTimeDelta(date)
 
     @property
     def comments(self):
@@ -93,7 +95,8 @@ class Comment(models.Model):
 
     @property
     def pub_date_delta(self):
-        d = self.create_date
-        return utils.getTimeDelta(d.year,d.month,d.day,d.hour,d.minute)
+        d = timezone.localtime(self.create_date)
+        date = datetime.datetime(d.year,d.month,d.day,d.hour,d.minute, d.second)
+        return utils.getTimeDelta(date)
 
 

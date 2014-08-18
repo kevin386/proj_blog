@@ -15,9 +15,13 @@ class TagAdmin(admin.ModelAdmin):
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'create_date', 'pub_date', )   
+    filter_horizontal=('tags',)
+    search_fields=('title','content')
+    list_filter=('tags',)
+    ording=("pub_date",)
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('content', )
+    list_display = ('content', 'article',)
 
 admin.site.register(PageView, PageViewAdmin)
 admin.site.register(Blog, BlogAdmin)

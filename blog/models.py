@@ -3,6 +3,9 @@ from django.db import models
 import datetime
 from utils import utils
 from django.utils import timezone
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 
 class PageView(models.Model):
     today = models.IntegerField("今日访问量",default=0)
@@ -12,22 +15,34 @@ class PageView(models.Model):
     total = models.IntegerField("总访问量",default=0)
     def __unicode__(self):
         return u"访问量统计"
+    class Meta:
+        verbose_name="页面访问量"
+        verbose_name_plural="页面访问量"
 
 class Blog(models.Model):
     title = models.CharField("博客名称", max_length=128)
     page_view = models.ForeignKey(PageView, verbose_name="页面访问统计")
     def __unicode__(self):
         return self.title
+    class Meta:
+        verbose_name="博客"
+        verbose_name_plural="博客列表"
         
 class Category(models.Model):
     name = models.CharField("分类", max_length=64)
     def __unicode__(self):
         return self.name
+    class Meta:
+        verbose_name="分类"
+        verbose_name_plural="分类列表"
     
 class Tag(models.Model):
     name = models.CharField("标签", max_length=64)
     def __unicode__(self):
         return self.name
+    class Meta:
+        verbose_name="标签"
+        verbose_name_plural="标签列表"
 
 class Article(models.Model):
     title = models.CharField("标题", max_length=128)
@@ -51,6 +66,8 @@ class Article(models.Model):
 
     class Meta:
         ordering=['-pub_date']
+        verbose_name="文章"
+        verbose_name_plural="文章列表"
     
     @property
     def pub_date_delta(self):
@@ -95,6 +112,8 @@ class Comment(models.Model):
     
     class Meta:
         ordering=['-create_date']
+        verbose_name="评论"
+        verbose_name_plural="评论列表"
 
     def __unicode__(self):
         return self.content

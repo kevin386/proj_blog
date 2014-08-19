@@ -31,6 +31,13 @@
         {% include "jia_this.html" %}
     </div>
     <div class="article_t_sep"></div>
+    <div class="article_tags">
+        <ul>
+            {% for tag in article.tags.all %}
+            <li><a href="{% url 'articles_by_tag' tag.id %}">{{ tag.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
     <div class="article_content"> {{ article.content|safe }} </div>
     <div class="article_t_sep"></div>
     <div class="article_nav">

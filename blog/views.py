@@ -48,10 +48,8 @@ class Blog(object):
         self.ranks = None
         self.lastestComments = None
         #self.pageView = PageView.objects.get(id=1)
-        try:
-            self.categories = [cat for cat in Category.objects.all()]
-        except Category.DoesNotExist, e:
-            pass
+        self.categories = Category.objects.all()
+        self.tags = Tag.objects.all()
 
 def submit_comment(request,id):
     blog = Blog()
@@ -73,6 +71,12 @@ def search_articel(request):
 
 def about_me(request):
     blog = Blog()
+    return render_to_response('index.html', locals(), context_instance=RequestContext(request))
+
+def tag(request,id):
+    blog = Blog()
+    tag = get_object_or_404(Tag,id=id)
+    articles = tag.article_set.all()
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 def vote(request,id):
@@ -101,16 +105,10 @@ def article(request,id):
 def category(request,id):
     blog = Blog()
     cat = get_object_or_404(Category,id=id)
-    try:
-        articles = cat.article_set.all().order_by('-pub_date')
-    except Exception, e:
-        pass
+    articles = cat.article_set.all()
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 def home(request):
     blog = Blog()
-    try:
-        articles = Article.objects.all().order_by('-pub_date')
-    except Exception, e:
-        pass
+    articles = Article.objects.all()
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))

@@ -50,7 +50,7 @@
             <div id="owner">
                 <div id="icon">
                     <a href="{% url 'about_me' %}">
-                    <img src="{% get_static_prefix %}images/IMG_Ali_01447.jpg" alt="头像" name="" width="220" height="220" />
+                    <img src="{% get_static_prefix %}images/IMG_Ali_01447.jpg" alt="头像" name="" width="220" height="176" />
                     </a>
                 </div>
                 {% if blog.showRequest %}
@@ -68,13 +68,24 @@
             </div>
 
             {% if blog.categories %}
-            <div id="categories"><span class="sidetitle">博客分类</span>
+            <div id="categories"><span class="sidetitle">日志分类</span>
                 <div class="sep"></div>
                 <ul id="ulpic">
                     {% for cat in blog.categories %}
                     {% if cat.article_set.count > 0 %}
                     <li><a href="{% url 'articles_by_cat' cat.id %}">{{ cat.name }}({{cat.article_set.count}})</a></li>
                     {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            {% if blog.tags %}
+            <div id="categories"><span class="sidetitle">我的标签</span>
+                <div class="sep"></div>
+                <ul id="ulpic">
+                    {% for tag in blog.tags %}
+                    <li><a href="{% url 'articles_by_tag' tag.id %}">{{ tag.name }}({{ tag.article_set.count }})</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -119,7 +130,16 @@
             <div id="top_div">
                 <ul>
                     <li><a href="{% url 'home' %}">首页</a></li>
-                    {% block category_nav %}{% endblock %}
+                    {% block category_nav %}
+                    {% if cat %}
+                    <li>=></li>
+                    <li><a href="javascript:void(0)">{{ cat.name }}</a></li>
+                    {% endif %}
+                    {% if tag %}
+                    <li>=></li>
+                    <li><a href="javascript:void(0)">{{ tag.name }}</a></li>
+                    {% endif %}
+                    {% endblock %}
                 </ul>
                 <form class="search" action="{% url 'search_articel' %}" method="post">
                     {% csrf_token %}

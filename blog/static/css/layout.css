@@ -120,6 +120,14 @@ table {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+#newestComment li{
+    width:190px;
+    word-break:break-all;
+}
+#newestComment li span{
+    color: #3A9CE4;
+}
+
 #content {
 	margin-left:230px !important;
 	margin-left:207px;
@@ -189,6 +197,7 @@ table {
 #sidebar #newestComment {
 	margin-bottom: 5px;
 	background-color: #EAEAEA;
+    width: 220px;
 }
 #sidebar #friendLinks {
 	margin-bottom: 5px;

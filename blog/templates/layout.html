@@ -102,12 +102,12 @@
             </div>
             {% endif %}
 
-            {% if blog.lastestComments %}
+            {% if blog.comments %}
             <div id="newestComment"><span class="sidetitle">最新评论</span>
                 <div class="sep"></div>
                 <ul >
-                    {% for comment in blog.lastestComments %}
-                    <li><a href="{{ comment.href }}">{{ comment.name }}</a></li>
+                    {% for comment in blog.comments %}
+                    <li><span>@{{ comment.user_name}}:</span><div>{{ comment.content }}</div></li>
                     {% endfor %}
                 </ul>
             </div>

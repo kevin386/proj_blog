@@ -46,7 +46,9 @@ class Blog(object):
         self.zen.content = zen_content
         self.zen.author = zen_author
         self.ranks = None
-        self.lastestComments = None
+        self.comments = Comment.objects.all()
+        if self.comments > 10:
+            self.comments = self.comments[:10]
         #self.pageView = PageView.objects.get(id=1)
         self.categories = Category.objects.all()
         self.tags = Tag.objects.all()

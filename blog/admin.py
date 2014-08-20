@@ -1,11 +1,20 @@
 from django.contrib import admin
-from blog.models import PageView,Blog,Category,Tag,Article,Comment
+from blog.models import *
 
-class PageViewAdmin(admin.ModelAdmin):
-    list_display = ('today', 'yesterday', 'week', 'month', 'total')
+class PageViewTodayAdmin(admin.ModelAdmin):
+    list_display = ('url', 'pv', 'year','month', 'day')
+
+class PageViewWeekAdmin(admin.ModelAdmin):
+    list_display = ('url', 'pv', 'date')
+
+class PageViewMonthAdmin(admin.ModelAdmin):
+    list_display = ('url', 'pv', 'year','month')
+
+class PageViewTotalAdmin(admin.ModelAdmin):
+    list_display = ('url', 'pv', 'date')
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('title', 'page_view')
+    list_display = ('title', )
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', )       
@@ -23,7 +32,10 @@ class ArticleAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('content', 'article',)
 
-admin.site.register(PageView, PageViewAdmin)
+admin.site.register(PageViewToday, PageViewTodayAdmin)
+admin.site.register(PageViewWeek, PageViewWeekAdmin)
+admin.site.register(PageViewMonth, PageViewMonthAdmin)
+admin.site.register(PageViewTotal, PageViewTotalAdmin)
 admin.site.register(Blog, BlogAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Tag, TagAdmin)

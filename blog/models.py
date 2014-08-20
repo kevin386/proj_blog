@@ -8,20 +8,51 @@ reload(sys)
 sys.setdefaultencoding("utf-8")
 
 class PageView(models.Model):
-    today = models.IntegerField("今日访问量",default=0)
-    yesterday = models.IntegerField("昨天访问量",default=0)
-    week = models.IntegerField("本周访问量",default=0)
-    month = models.IntegerField("本月访问量",default=0)
-    total = models.IntegerField("总访问量",default=0)
+    url = models.URLField(max_length=1024,default="")
+    pv = models.IntegerField("访问量",default=0)
+    year = models.IntegerField(default=0)
+    month = models.IntegerField(default=0)
+    day = models.IntegerField(default=0)
+    week = models.IntegerField(default=0)
+    date = models.DateField(auto_now_add=True, default=datetime.date.today)
     def __unicode__(self):
         return u"访问量统计"
     class Meta:
+        ordering=['-date']
+        abstract=True
         verbose_name="页面访问量"
         verbose_name_plural="页面访问量"
 
+class PageViewToday(PageView):
+    def __unicode__(self):
+        return u"今日访问量"
+    class Meta:
+        verbose_name="今日访问量"
+        verbose_name_plural="今日访问量"
+
+class PageViewWeek(PageView):
+    def __unicode__(self):
+        return u"本周访问量"
+    class Meta:
+        verbose_name="本周访问量"
+        verbose_name_plural="本周访问量"
+
+class PageViewMonth(PageView):
+    def __unicode__(self):
+        return "本月访问量"
+    class Meta:
+        verbose_name="本月访问量"
+        verbose_name_plural="本月访问量"
+
+class PageViewTotal(PageView):
+    def __unicode__(self):
+        return "总访问量"
+    class Meta:
+        verbose_name="总访问量"
+        verbose_name_plural="总访问量"
+
 class Blog(models.Model):
     title = models.CharField("博客名称", max_length=128)
-    page_view = models.ForeignKey(PageView, verbose_name="页面访问统计")
     def __unicode__(self):
         return self.title
     class Meta:
@@ -47,9 +78,9 @@ class Tag(models.Model):
 class Article(models.Model):
     title = models.CharField("标题", max_length=128)
     #一个分类有多篇文章（多对一关系）
-    category = models.ForeignKey(Category,verbose_name="分类")
+    category = models.ForeignKey(Category,verbose_name="分类", blank=True, null=True)
     #一篇文章可以有多个标签，一个标签也可以标记多篇文章（多对多关系）
-    tags = models.ManyToManyField(Tag, verbose_name="标签", blank=True)
+    tags = models.ManyToManyField(Tag, verbose_name="标签", blank=True, null=True)
     content = models.TextField("内容")
     create_date = models.DateTimeField("创建日期",auto_now_add=True)
     pub_date = models.DateTimeField("发布日期",auto_now=True)

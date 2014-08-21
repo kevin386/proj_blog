@@ -46,6 +46,7 @@ def vote(request,id):
         request.session['has_voted_'+str(id)] = True
     return HttpResponse(vote_count)
 
+@page_view_analyze
 def article(request,id):
     blog = Blog()
     article = get_object_or_404(Article,id=id)

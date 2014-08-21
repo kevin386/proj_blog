@@ -2,16 +2,16 @@ from django.contrib import admin
 from blog.models import *
 
 class PageViewTodayAdmin(admin.ModelAdmin):
-    list_display = ('url', 'pv', 'year','month', 'day')
+    list_display = ('url', 'pv','ip', 'year','month', 'day')
 
 class PageViewWeekAdmin(admin.ModelAdmin):
-    list_display = ('url', 'pv', 'date')
+    list_display = ('url', 'pv','ip', 'date')
 
 class PageViewMonthAdmin(admin.ModelAdmin):
-    list_display = ('url', 'pv', 'year','month')
+    list_display = ('url', 'pv','ip', 'year','month')
 
 class PageViewTotalAdmin(admin.ModelAdmin):
-    list_display = ('url', 'pv', 'date')
+    list_display = ('url', 'pv', 'ip', 'date')
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', )

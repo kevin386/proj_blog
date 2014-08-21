@@ -1,20 +1,26 @@
 #-*- coding:utf-8 -*-
 from django.db import models
 import datetime
-from utils import utils
 from django.utils import timezone
+from django.core.urlresolvers import reverse
+
+from utils import utils
+
 import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+SUMPV = lambda pvs: sum([int(pv.pv) for pv in pvs])
+
 class PageView(models.Model):
     url = models.URLField(max_length=1024,default="")
+    ip = models.CharField("访客IP", max_length=32, default="")
     pv = models.IntegerField("访问量",default=0)
-    year = models.IntegerField(default=0)
-    month = models.IntegerField(default=0)
-    day = models.IntegerField(default=0)
-    week = models.IntegerField(default=0)
-    date = models.DateField(auto_now_add=True, default=datetime.date.today)
+    year = models.IntegerField("年份", default=0)
+    month = models.IntegerField("月份", default=0)
+    day = models.IntegerField("日", default=0)
+    week = models.IntegerField("周", default=0)
+    date = models.DateField("日期", auto_now_add=True, default=datetime.date.today)
     def __unicode__(self):
         return u"访问量统计"
     class Meta:
@@ -86,7 +92,7 @@ class Article(models.Model):
     pub_date = models.DateTimeField("发布日期",auto_now=True)
     origin = models.URLField("来源",null=True,blank=True)
     is_from = models.CharField("来自", max_length=1, default='Y', choices=(('Y','yuanchuang'),('Z','zhuanzai')))
-    view_count = models.IntegerField("访问量统计", default=0)
+    #view_count = models.IntegerField("访问量统计", default=0)
     vote_count = models.IntegerField("支持量统计", default=0)
     comment_count = property(lambda self: self.comment_set.count())
     is_yuan = property(lambda self: self.is_from == u'Y')
@@ -99,7 +105,13 @@ class Article(models.Model):
         ordering=['-pub_date']
         verbose_name="文章"
         verbose_name_plural="文章列表"
-    
+
+    @property
+    def view_count(self):
+        url = reverse("article_by_id", kwargs={"id":self.id})
+        pvTotal = PageViewTotal.objects.filter(url=url)
+        return SUMPV(pvTotal)
+
     @property
     def pub_date_delta(self):
         d = timezone.localtime(self.pub_date)

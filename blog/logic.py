@@ -36,22 +36,23 @@ def page_view_analyze(func):
     @wraps(func)
     def returned_wrapper(request, *args, **kwargs):
         url = request.META['REQUEST_URI']
+        ip = request.META['REMOTE_ADDR']
         today = datetime.date.today()
         #总访问量
-        pvTotal = PageViewTotal.objects.get_or_create(url=url)[0]
+        pvTotal = PageViewTotal.objects.get_or_create(url=url,ip=ip)[0]
         pvTotal.pv += 1
         pvTotal.save()
         #y今日访问量y
-        pvToday = PageViewToday.objects.get_or_create(url=url,year=today.year,month=today.month,day=today.day)[0]
+        pvToday = PageViewToday.objects.get_or_create(url=url,ip=ip, year=today.year,month=today.month,day=today.day)[0]
         pvToday.pv += 1
         pvToday.save()
         #本周访问量
         weekNow = int(today.strftime('%U'))
-        pvWeek = PageViewWeek.objects.get_or_create(url=url,year=today.year,week=weekNow)[0]
+        pvWeek = PageViewWeek.objects.get_or_create(url=url,ip=ip,year=today.year,week=weekNow)[0]
         pvWeek.pv += 1
         pvWeek.save()
         #本月访问量
-        pvMonth = PageViewMonth.objects.get_or_create(url=url,year=today.year,month=today.month)[0]
+        pvMonth = PageViewMonth.objects.get_or_create(url=url,ip=ip, year=today.year,month=today.month)[0]
         pvMonth.pv += 1
         pvMonth.save()
         return func(request, *args, **kwargs)
@@ -60,30 +61,30 @@ def page_view_analyze(func):
 class PageViewLogic(object):
     def __init__(self, url='/', date=datetime.date.today()):
         try:
-            pvToday = PageViewToday.objects.get(url=url,year=date.year,month=date.month,day=date.day)
-            self.today = pvToday.pv
+            pvToday = PageViewToday.objects.filter(url=url,year=date.year,month=date.month,day=date.day)
+            self.today = SUMPV(pvToday)
         except PageViewToday.DoesNotExist, e:
             self.today = 0
         try:
             yesterday = date - datetime.timedelta(days=1)
-            pvYesterday = PageViewToday.objects.get(url=url,year=yesterday.year,month=yesterday.month,day=yesterday.day)
-            self.yesterday = pvYesterday.pv
+            pvYesterday = PageViewToday.objects.filter(url=url,year=yesterday.year,month=yesterday.month,day=yesterday.day)
+            self.yesterday = SUMPV(pvYesterday)
         except PageViewToday.DoesNotExist, e:
             self.yesterday = 0
         try:
             weekNow = int(date.strftime('%U'))
-            pvWeek = PageViewWeek.objects.get(url=url,year=date.year,week=weekNow)
-            self.week = pvWeek.pv
+            pvWeek = PageViewWeek.objects.filter(url=url,year=date.year,week=weekNow)
+            self.week = SUMPV(pvWeek)
         except PageViewWeek.DoesNotExist, e:
             self.week = 0
         try:
-            pvMonth = PageViewMonth.objects.get(url=url,year=date.year,month=date.month)
-            self.month = pvMonth.pv
+            pvMonth = PageViewMonth.objects.filter(url=url,year=date.year,month=date.month)
+            self.month = SUMPV(pvMonth)
         except PageViewMonth.DoesNotExist, e:
             self.month = 0
         try:
-            pvTotal = PageViewTotal.objects.get(url=url)
-            self.total = pvTotal.pv
+            pvTotal = PageViewTotal.objects.filter(url=url)
+            self.total = SUMPV(pvTotal)
         except PageViewTotal.DoesNotExist, e:
             self.total = 0
 

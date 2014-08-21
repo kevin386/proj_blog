@@ -55,18 +55,23 @@
         <div class="article_comment_form">
             <!--<img src="images/portrait.gif" /> -->
             <div class="input_omment">
-                {% for e in errors %}
-                <p>{{ e }}</p>
-                {% endfor %}
+
                 <form class="alt_comment_form" action="{% url 'submit_comment' article.id %}" method="post">
                     {% csrf_token %}
                     <div class="com_line">
-                    <div class="flag">昵&nbsp;&nbsp;&nbsp;称</div><input type="text" id="user_name" name="user_name">
+                    {% if errors.name %}
+                    <p class="errors">{{ errors.name }}</p>
+                    {% endif %}
+
+                    <div class="flag">称&nbsp;&nbsp;呼:</div><input type="text" id="user_name" name="user_name" value="{% if user_name %}{{ user_name }}{% endif %}">
                     </div>
                     <div class="com_line">
-                    <div class="flag">E-mail</div><input type="text" id="email" name="email">
+                    <div class="flag">E-mail:</div><input type="text" id="email" name="email" value="{% if email %}{{ email }}{% endif %}">
                     </div>
-                    <textarea id="comment_content" name="comment_content"></textarea>
+                    {% if errors.content %}
+                    <p class="errors">{{ errors.content }}</p>
+                    {% endif %}
+                    <textarea id="comment_content" name="comment_content">{% if comment_content %}{{ comment_content }}{% endif %}</textarea>
                     <p>
                     <input type="submit" id="comment_button" value="发表评论">
                     </p>
@@ -79,6 +84,9 @@
         <p id="comment_p2">尚无网友评论</p>
         {% else %}
         <div id="allComments">
+            {% if errors.thanks %}
+            <p class="thanks">{{ errors.thanks }}</p>
+            {% endif %}
             <ul id="comm_list">
                 {% for comment in article.comment_set.all %}
                 <li class="comm_item">

@@ -576,10 +576,19 @@ table {
 	margin-left: 2px;
 }
 
+#user_name,#email{
+	border: solid 1px #C2C2C2;
+	width: 150px;
+}
+
 #comment_button{
-	border: solid 1px #999999;
+	border-right:solid 2px #999999;
+	border-bottom: solid 2px #999999;
 	background-color: #5CC26F;
 	color: #fff;
+	line-height: 30px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 .article_content{
@@ -634,4 +643,16 @@ table {
 
 .article_tags a:active{
     background-color:#7A991A;
+}
+
+.errors{
+	background-color: #E8E8BA;
+	color: red;
+	padding-left: 5px;
+}
+
+.thanks{
+	background-color: #B7F9E3;
+	padding-left: 10px;
+	line-height: 30px;
 }

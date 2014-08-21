@@ -10,15 +10,36 @@ from blog.logic import *
 
 def submit_comment(request,id):
     blog = Blog()
-    errors = []
-    content = request.POST.get('comment_content')
+    article = get_object_or_404(Article,id=id)
+    try:
+        preArticle = Article.objects.filter(pub_date__gt=article.pub_date).order_by('pub_date').first()
+    except Article.DoesNotExist, e:
+        preArticle = [] 
+    try:
+        nextArticle = Article.objects.filter(pub_date__lt=article.pub_date).order_by('pub_date').last()
+    except Article.DoesNotExist, e:
+        nextArticle = []
     user_name = request.POST.get('user_name')
+    comment_content = request.POST.get('comment_content')
     email = request.POST.get('email')
-    if user_name and content:
-        article = get_object_or_404(Article,id=id)
-        com = Comment(user_name=user_name,email=email,content=content,article=article)
+    class ErrorUserName(Exception):pass
+    class ErrorContent(Exception):pass
+    errors = {}
+    try:
+        if len(user_name) == 0:
+            raise ErrorUserName
+        if len(comment_content) == 0:
+            raise ErrorContent
+        com = Comment(user_name=user_name,email=email,content=comment_content,article=article)
         com.save()
-    return HttpResponseRedirect(reverse("article_by_id", kwargs={"id":id}))
+        user_name = comment_content = email = None
+        errors['thanks'] = u"感谢您的吐槽与建议！"
+    except ErrorUserName, e:
+        errors['name'] = u"至少让我知道您的称呼吧?"
+    except ErrorContent, e:
+        errors['content'] = u"您似乎想吐槽点什么?"
+    #return HttpResponseRedirect(reverse("article_by_id", kwargs={"id":id}))
+    return render_to_response('article.html', locals(), context_instance=RequestContext(request))
 
 def search_articel(request):
     blog = Blog()

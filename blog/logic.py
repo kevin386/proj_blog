@@ -35,7 +35,10 @@ class Zen(object):
 def page_view_analyze(func):
     @wraps(func)
     def returned_wrapper(request, *args, **kwargs):
-        url = request.META['REQUEST_URI']
+        if request.META.has_key("REQUEST_URI"):
+            url = request.META['REQUEST_URI']
+        else:
+            url = request.META['PATH_INFO'].encode("utf-8")
         ip = request.META['REMOTE_ADDR']
         today = datetime.date.today()
         #总访问量

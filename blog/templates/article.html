@@ -5,7 +5,7 @@
 {% block category_nav %}
 {% if article.category %}
     <li>=></li>
-    <li><a href="{% url 'articles_by_cat' article.category.id %}">{{ article.category.name }}</a></li>
+    <li><a href="{% url 'articles_by_cat' article.category.id 1 %}">{{ article.category.name }}</a></li>
 {% endif %}
 {% endblock %}
 
@@ -34,18 +34,18 @@
     <div class="article_tags">
         <ul>
             {% for tag in article.tags.all %}
-            <li><a href="{% url 'articles_by_tag' tag.id %}">{{ tag.name }}</a></li>
+            <li><a href="{% url 'articles_by_tag' tag.id 1 %}">{{ tag.name }}</a></li>
             {% endfor %}
         </ul>
     </div>
     <div class="article_content"> {{ article.content|safe }} </div>
     <div class="article_t_sep"></div>
     <div class="article_nav">
-        {% if preArticle %}
-        <p id="pre_article"><a href="{% url 'article_by_id' preArticle.id %}">上一篇&gt;&gt; {{ preArticle.title }}</a></p>
+        {% if article_pre %}
+        <p id="pre_article"><a href="{% url 'article_by_id' article_pre.id %}">上一篇&gt;&gt; {{ article_pre.title }}</a></p>
         {% endif %}
-        {% if nextArticle %}
-        <p id="next_article"><a href="{% url 'article_by_id' nextArticle.id %}">下一篇&gt;&gt; {{ nextArticle.title }}</a></p>
+        {% if article_next %}
+        <p id="next_article"><a href="{% url 'article_by_id' article_next.id %}">下一篇&gt;&gt; {{ article_next.title }}</a></p>
         {% endif %}
     </div>
 
@@ -59,18 +59,14 @@
                 <form class="alt_comment_form" action="{% url 'submit_comment' article.id %}" method="post">
                     {% csrf_token %}
                     <div class="com_line">
-                    {% if errors.name %}
-                    <p class="errors">{{ errors.name }}</p>
+                    {% if error_input %}
+                    <p class="errors">{{ error_input }}</p>
                     {% endif %}
-
                     <div class="flag">称&nbsp;&nbsp;呼:</div><input type="text" id="user_name" name="user_name" value="{% if user_name %}{{ user_name }}{% endif %}">
                     </div>
                     <div class="com_line">
                     <div class="flag">E-mail:</div><input type="text" id="email" name="email" value="{% if email %}{{ email }}{% endif %}">
                     </div>
-                    {% if errors.content %}
-                    <p class="errors">{{ errors.content }}</p>
-                    {% endif %}
                     <textarea id="comment_content" name="comment_content">{% if comment_content %}{{ comment_content }}{% endif %}</textarea>
                     <p>
                     <input type="submit" id="comment_button" value="发表评论">
@@ -84,8 +80,8 @@
         <p id="comment_p2">尚无网友评论</p>
         {% else %}
         <div id="allComments">
-            {% if errors.thanks %}
-            <p class="thanks">{{ errors.thanks }}</p>
+            {% if thanks %}
+            <p class="thanks">{{ thanks }}</p>
             {% endif %}
             <ul id="comm_list">
                 {% for comment in article.comment_set.all %}

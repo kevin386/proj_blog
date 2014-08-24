@@ -656,3 +656,64 @@ table {
 	padding-left: 10px;
 	line-height: 30px;
 }
+
+.paginator{
+	background-color: #EBEBEB;
+	line-height: 40px;
+	text-align:center;
+	margin: auto;
+}
+
+.paginator ul{
+	margin-left: 10px;
+	margin-top: 10px;
+	list-style-type:none;
+}
+.paginator li{
+    display:inline;
+}
+.hilite a:link{
+    font-weight: bold;
+    color:#FFFFFF;
+    background-color:#703E80;
+    text-align:center;
+    padding: 4px;
+    text-decoration:none;
+}
+.hilite a:visited{
+    font-weight: bold;
+    color:#FFFFFF;
+    background-color:#703E80;
+    text-align:center;
+    padding: 4px;
+    text-decoration:none;
+}
+.hilite a:hover{
+    background-color:#974DB3;
+}
+.hilite a:active{
+    background-color:#974DB3;
+}
+.unhilite a:link{
+    font-weight: bold;
+    color:#FFFFFF;
+    background-color:#98bf21;
+    text-align:center;
+    padding: 4px;
+    text-decoration:none;
+}
+.unhilite a:visited{
+    font-weight: bold;
+    color:#FFFFFF;
+    background-color:#98bf21;
+    text-align:center;
+    padding: 4px;
+    text-decoration:none;
+}
+
+.unhilite a:hover{
+    background-color:#7A991A;
+}
+.unhilite a:active{
+    background-color:#7A991A;
+}

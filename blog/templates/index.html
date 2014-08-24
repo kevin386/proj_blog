@@ -2,20 +2,44 @@
 
 {% block content %}
 <div class="article_list">
-    {% for article in articles %}
+    {% for article in page.object_list %}
     <div class="article_item">
         <div class="article_date">
             <p class="day">{{ article.pub_date|date:"d" }}</p>
             <p class="date">{{ article.pub_date|date:"Y-m" }}</p>
         </div>
         <p class="title_p1">{% if article.is_yuan %} <span class="yuan">原</span> {% else %}{% if article.is_zhuan %} <span class="zhuan">转</span> {% endif %}{% endif %}<a href="{% url 'article_by_id' article.id %}">{{ article.title }}</a></p>
-        <p class="title_p2">分类: <a href="{% url 'articles_by_cat' article.category.id %}">{{ article.category.name }}</a>&nbsp;统计: {{ article.comment_count }}评/{{ article.view_count }}阅/{{ article.vote_count }}赞</p>
+        <p class="title_p2">分类: <a href="{% url 'articles_by_cat' article.category.id 1 %}">{{ article.category.name }}</a>&nbsp;统计: {{ article.comment_count }}评/{{ article.view_count }}阅/{{ article.vote_count }}赞</p>
     </div>
     <div class="article_sep"></div>
     {% endfor %}
 
-    {% if not articles %}
-    <p>没有文章!</p>
+    {% if pages.count > 0 %}
+    <div class="paginator">
+        <ul>
+            {% for i in pages.page_range %}
+            <li>
+                {% if i == page.number %}
+                <span class="hilite"><a href="javascript:void(0)">{{ i }}</a></span>
+                {% else %}
+                {% if cat %}
+                <span class="unhilite"><a href="{% url 'articles_by_cat' cat.id i %}">{{ i }}</a></span>
+                {% else %}
+                {% if tag %}
+                <span class="unhilite"><a href="{% url 'articles_by_tag' tag.id i %}">{{ i }}</a></span>
+                {% else %}
+                {% if search_content %}
+                <span class="unhilite"><a href="{% url 'search_articel' i %}">{{ i }}</a></span>
+                {% else %}
+                <span class="unhilite"><a href="{% url 'articles_by_page' i %}">{{ i }}</a></span>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
     {% endif %}
 </div>
 {% endblock %}

@@ -6,7 +6,7 @@
 <title>{{ blog.name }}</title>
 <link href="{% get_static_prefix %}css/layout.css" rel="stylesheet" type="text/css" />
 <meta name="Keywords" content="{{ blog.keywards }}" />
-<meta name="author" content"{{ blog.author }}" />
+<meta name="author" content="{{ blog.author }}" />
 <meta name="Description" content="{{ blog.description }}" />
 
 <script type="text/javascript"  src="http://libs.baidu.com/jquery/1.10.2/jquery.min.js"></script>
@@ -73,7 +73,7 @@
                 <ul id="ulpic">
                     {% for cat in blog.categories %}
                     {% if cat.article_set.count > 0 %}
-                    <li><a href="{% url 'articles_by_cat' cat.id %}">{{ cat.name }}({{cat.article_set.count}})</a></li>
+                    <li><a href="{% url 'articles_by_cat' cat.id 1 %}">{{ cat.name }}({{cat.article_set.count}})</a></li>
                     {% endif %}
                     {% endfor %}
                 </ul>
@@ -85,7 +85,7 @@
                 <div class="sep"></div>
                 <ul id="ulpic">
                     {% for tag in blog.tags %}
-                    <li><a href="{% url 'articles_by_tag' tag.id %}">{{ tag.name }}({{ tag.article_set.count }})</a></li>
+                    <li><a href="{% url 'articles_by_tag' tag.id 1 %}">{{ tag.name }}({{ tag.article_set.count }})</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -141,9 +141,9 @@
                     {% endif %}
                     {% endblock %}
                 </ul>
-                <form class="search" action="{% url 'search_articel' %}" method="post">
+                <form class="search" action="{% url 'search_articel' 1 %}" method="post">
                     {% csrf_token %}
-                    <input id="search_content" name="search_content" size="30"/>
+                    <input id="search_content" name="search_content" size="30" value="{% if search_content %}{{ search_content }}{% endif %}"/>
                     <input type="submit" id="search_button" value="搜索">
                 </form>
             </div>

@@ -15,7 +15,7 @@
 <script type="text/javascript" src="{% get_static_prefix %}js/main.js"></script>
 <!-- syntaxhighlighter begin -->
 <link type="text/css" rel="stylesheet" href="{% get_static_prefix %}syntaxhighlighter/styles/shCore.css"></link>
-<link type="text/css" rel="stylesheet" href="{% get_static_prefix %}syntaxhighlighter/styles/shCoreDefault.css"></link>
+<link type="text/css" rel="stylesheet" href="{% get_static_prefix %}syntaxhighlighter/styles/shThemeDefault.css"></link>
 <script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shCore.js"></script>
 <script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushCSharp.js"></script>
 <script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushPhp.js"></script>
@@ -30,7 +30,10 @@
 <script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushCss.js"></script>
 <script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushCpp.js"></script>
 <script language="javascript" src="{% get_static_prefix %}syntaxhighlighter/scripts/shBrushBash.js"></script>
-<script type="text/javascript">SyntaxHighlighter.all();</script>
+<script type="text/javascript">
+SyntaxHighlighter.config.clipboardSwf = '{% get_static_prefix %}syntaxhighlighter/scripts/clipboard.swf';
+SyntaxHighlighter.all();
+</script>
 <!-- syntaxhighlighter end -->
 </head>
 <body>

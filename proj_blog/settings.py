@@ -12,7 +12,10 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-ADMINS=(('kevin', 'null386@gmail.com'),)
+MANAGERS = ADMINS=(
+    ('kevin', 'null_386@qq.com'),
+    ('kevin', 'luozhiyong134@126.com'),
+)
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR,'templates'),

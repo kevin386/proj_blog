@@ -28,6 +28,11 @@ with open(configPath, 'r') as cfgfile:
     psw = config.get("dbinfo",'psw')
     host = config.get("dbinfo",'host')
     port = config.get("dbinfo",'port')
+    EMAIL_HOST = config.get('email','EMAIL_HOST') 
+    EMAIL_PORT = int(config.get('email','EMAIL_PORT'))
+    EMAIL_HOST_USER = config.get('email','EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = config.get('email','EMAIL_HOST_PASSWORD')
+    EMAIL_USE_TLS = True
 
 DATABASES = {
     'default': {

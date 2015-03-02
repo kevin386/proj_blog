@@ -84,7 +84,7 @@ class Tag(models.Model):
 class Article(models.Model):
     title = models.CharField("标题", max_length=128)
     #一个分类有多篇文章（多对一关系）
-    category = models.ForeignKey(Category,verbose_name="分类", blank=True, null=True)
+    category = models.ForeignKey(Category,verbose_name="分类")
     #一篇文章可以有多个标签，一个标签也可以标记多篇文章（多对多关系）
     tags = models.ManyToManyField(Tag, verbose_name="标签", blank=True, null=True)
     content = models.TextField("内容")

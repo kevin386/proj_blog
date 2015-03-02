@@ -10,7 +10,7 @@ import time
 from blog.models import *
 from blog.logic import *
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('worker')
 
 def submit_comment(request,id):
     blog = get_basic_output()

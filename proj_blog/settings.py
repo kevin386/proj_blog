@@ -93,3 +93,87 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
+
+
+WEB_LOG_FILE_PATH = os.path.join(BASE_DIR, "logs/site.log")
+WORKER_LOG_FILE_PATH = os.path.join(BASE_DIR, "logs/worker.log")
+
+LOG_FORMAT = '\n'.join((
+    '/' + '-' * 80,
+    '[%(levelname)s][%(asctime)s][%(process)d:%(thread)d][%(filename)s:%(lineno)d %(funcName)s]:',
+    '%(message)s',
+    '-' * 80 + '/',
+))
+
+WORKER_LOG_LEVEL = 'DEBUG'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+
+    'formatters': {
+        'standard': {
+            'format': LOG_FORMAT,
+        },
+    },
+
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda x: DEBUG,
+        }
+    },
+    'handlers': {
+        'flylog': {
+            'level': 'CRITICAL',
+            'class': 'flylog.FlyLogHandler',
+            'formatter': 'standard',
+            'source': os.path.basename(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
+        },
+        'rotating_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': WEB_LOG_FILE_PATH,
+            'maxBytes': 1024*1024*500,
+            'backupCount': 5,
+            'formatter': 'standard',
+        },
+        'worker_file': {
+            'level': WORKER_LOG_LEVEL,
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': WORKER_LOG_FILE_PATH,
+            'maxBytes': 1024*1024*500,
+            'backupCount': 5,
+            'formatter': 'standard',
+            },
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['rotating_file', 'flylog'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+
+        'django.request': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+
+        'worker': {
+            'handlers': ['console', 'worker_file', 'flylog'],
+            'level': WORKER_LOG_LEVEL,
+            'propagate': False
+        },
+    }
+}

@@ -127,12 +127,7 @@ LOGGING = {
         }
     },
     'handlers': {
-        'flylog': {
-            'level': 'CRITICAL',
-            'class': 'flylog.FlyLogHandler',
-            'formatter': 'standard',
-            'source': os.path.basename(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
-        },
+
         'rotating_file': {
             'level': 'ERROR',
             'class': 'logging.handlers.RotatingFileHandler',
@@ -171,7 +166,7 @@ LOGGING = {
         },
 
         'worker': {
-            'handlers': ['console', 'worker_file', 'flylog'],
+            'handlers': ['console', 'worker_file'],
             'level': WORKER_LOG_LEVEL,
             'propagate': False
         },

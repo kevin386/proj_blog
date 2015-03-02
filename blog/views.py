@@ -1,12 +1,16 @@
 #-*- coding:utf-8 -*-
+import logging
 from django.shortcuts import get_object_or_404,render_to_response,get_list_or_404
 from django.http import Http404
 from django.http import HttpResponse,HttpResponseRedirect
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
+import time
 
 from blog.models import *
 from blog.logic import *
+
+logger = logging.getLogger(__name__)
 
 def submit_comment(request,id):
     blog = get_basic_output()
@@ -73,7 +77,12 @@ def category(request,id,index):
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 def page(request, index):
+    begin_time = time.time()
+    logger.debug('begin_time: %s', begin_time)
     blog,pages,page = get_basic_output(objects=Article.objects.all(), index=index, request=request, clear_content=True)
+    end_time = time.time()
+    logger.debug('end_time: %s', end_time)
+    logger.debug('delta: %s', end_time - begin_time)
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 @page_view_analyze

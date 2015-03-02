@@ -154,7 +154,7 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers': ['rotating_file', 'flylog'],
+            'handlers': ['rotating_file'],
             'level': 'DEBUG',
             'propagate': False
         },

@@ -77,12 +77,7 @@ def category(request,id,index):
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 def page(request, index):
-    begin_time = time.time()
-    logger.debug('begin_time: %s', begin_time)
     blog,pages,page = get_basic_output(objects=Article.objects.all(), index=index, request=request, clear_content=True)
-    end_time = time.time()
-    logger.debug('end_time: %s', end_time)
-    logger.debug('delta: %s', end_time - begin_time)
     return render_to_response('index.html', locals(), context_instance=RequestContext(request))
 
 @page_view_analyze

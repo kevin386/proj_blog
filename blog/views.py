@@ -12,6 +12,16 @@ from blog.logic import *
 
 logger = logging.getLogger('worker')
 
+FILTER_COMMENTS = [
+    'www.larneda.org',
+]
+
+def filter_comment(comment):
+    for flt_cmt in FILTER_COMMENTS:
+        if comment in flt_cmt:
+            return True
+    return False
+
 def submit_comment(request,id):
     blog = get_basic_output()
     article = get_object_or_404(Article,id=id)
@@ -24,10 +34,18 @@ def submit_comment(request,id):
             raise InputException(u"至少让我知道您的称呼吧?")
         if len(comment_content) == 0:
             raise InputException(u"您似乎想吐槽点什么?")
+        if filter_comment(comment_content):
+            logger.error('filter_comment:\nREMOTE_ADDR: %s\nREMOTE_PORT: %s\nREQUEST_METHOD: %s\nREQUEST_URI: %s',
+                request.META['REMOTE_ADDR'],
+                request.META['REMOTE_PORT'],
+                request.META['REQUEST_METHOD'],
+                request.META['REQUEST_URI']
+            )
+            raise InputException(u"You are a very bad guy!!")
         com = Comment(user_name=user_name,email=email,content=comment_content,article=article)
         com.save()
-        user_name = comment_content = email = None
         thanks = u"感谢您的吐槽与建议！"
+        user_name = comment_content = email = None
     except InputException as e:
         error_input = e.value
     #return HttpResponseRedirect(reverse("article_by_id", kwargs={"id":id}))

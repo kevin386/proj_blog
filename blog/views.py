@@ -18,7 +18,7 @@ FILTER_COMMENTS = [
 
 def filter_comment(comment):
     for flt_cmt in FILTER_COMMENTS:
-        if comment in flt_cmt:
+        if flt_cmt in comment:
             return True
     return False
 

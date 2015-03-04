@@ -74,7 +74,7 @@ class CategorySecond(models.Model):
         verbose_name_plural="二级分类列表"
 
 def default_category():
-    return Category.objects.latest()
+    return Category.objects.first()
 
 class Category(models.Model):
     name = models.CharField("分类", max_length=64)

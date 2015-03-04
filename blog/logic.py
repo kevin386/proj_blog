@@ -137,6 +137,6 @@ class Blog(object):
         if self.comments > 10:
             self.comments = self.comments[:10]
         self.pageView = PageViewCount()
-        self.categories = Category.objects.all()
+        self.categories = [cat for cat in Category.objects.all() if cat.article_set.count() > 0]
         self.tags = Tag.objects.all()
 

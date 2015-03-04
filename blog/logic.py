@@ -124,8 +124,8 @@ class PageViewCount(object):
 
 class Blog(object):
     def __init__(self):
-        self.name = u"kevin's blog"
-        self.keywards = u"小虫子,django,python"
+        self.name = u"Python编程之路"
+        self.keywards = u"django,python,linux,android,ios,游戏,西瓜影音"
         self.author = u"kevin"
         self.description = u"这是一个python程序员的博客"
         self.zen = Zen()
@@ -138,5 +138,5 @@ class Blog(object):
             self.comments = self.comments[:10]
         self.pageView = PageViewCount()
         self.categories = [cat for cat in Category.objects.all() if cat.article_set.count() > 0]
-        self.tags = Tag.objects.all()
+        self.tags = [tag for tag in Tag.objects.all() if tag.article_set.count() > 0]
 

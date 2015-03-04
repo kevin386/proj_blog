@@ -75,7 +75,7 @@ class CategorySecond(models.Model):
 
 class Category(models.Model):
     name = models.CharField("分类", max_length=64)
-    sub_category = models.ForeignKey(CategorySecond, verbose_name='二级分类')
+    sub_category = models.ForeignKey(CategorySecond, verbose_name='二级分类', blank=True, null=True)
     def __unicode__(self):
         return self.name
     class Meta:

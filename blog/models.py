@@ -64,9 +64,18 @@ class Blog(models.Model):
     class Meta:
         verbose_name="博客"
         verbose_name_plural="博客列表"
-        
+
+class CategorySecond(models.Model):
+    name = models.CharField("二级分类", max_length=64)
+    def __unicode__(self):
+        return self.name
+    class Meta:
+        verbose_name="二级分类"
+        verbose_name_plural="二级分类列表"
+
 class Category(models.Model):
     name = models.CharField("分类", max_length=64)
+    sub_category = models.ForeignKey(CategorySecond, verbose_name='二级分类')
     def __unicode__(self):
         return self.name
     class Meta:
